@@ -1,0 +1,242 @@
+{
+  "demo_medic": {
+    "subtitle": "sound.mercspeak.demo.medic",
+    "sounds": [
+      "mercspeak:demo_medic1",
+      "mercspeak:demo_medic2",
+      "mercspeak:demo_medic3"
+    ]
+  },
+
+  "demo_thanks": {
+    "subtitle": "sound.mercspeak.demo.thanks",
+    "sounds": [
+      "mercspeak:demo_thanks1",
+      "mercspeak:demo_thanks2",
+      "mercspeak:demo_thanks_kill1",
+      "mercspeak:demo_thanks_kill2",
+      "mercspeak:demo_thanks_kill3"
+    ]
+  },
+
+  "demo_go": {
+    "subtitle": "sound.mercspeak.demo.go",
+    "sounds": [
+      "mercspeak:demo_go1",
+      "mercspeak:demo_go2",
+      "mercspeak:demo_go3"
+    ]
+  },
+
+  "demo_move": {
+    "subtitle": "sound.mercspeak.demo.move",
+    "sounds": [
+      "mercspeak:demo_move1",
+      "mercspeak:demo_move2",
+      "mercspeak:demo_move3"
+    ]
+  },
+
+  "demo_left": {
+    "subtitle": "sound.mercspeak.demo.left",
+    "sounds": [
+      "mercspeak:demo_left1",
+      "mercspeak:demo_left2",
+      "mercspeak:demo_left3"
+    ]
+  },
+
+  "demo_right": {
+    "subtitle": "sound.mercspeak.demo.right",
+    "sounds": [
+      "mercspeak:demo_right1",
+      "mercspeak:demo_right2",
+      "mercspeak:demo_right3"
+    ]
+  },
+
+  "demo_yes": {
+    "subtitle": "sound.mercspeak.demo.yes",
+    "sounds": [
+      "mercspeak:demo_yes1",
+      "mercspeak:demo_yes2",
+      "mercspeak:demo_yes3"
+    ]
+  },
+
+  "demo_no": {
+    "subtitle": "sound.mercspeak.demo.no",
+    "sounds": [
+      "mercspeak:demo_no1",
+      "mercspeak:demo_no2",
+      "mercspeak:demo_no3"
+    ]
+  },
+
+  "demo_incoming": {
+    "subtitle": "sound.mercspeak.demo.incoming",
+    "sounds": [
+      "mercspeak:demo_incoming1",
+      "mercspeak:demo_incoming2",
+      "mercspeak:demo_incoming3"
+    ]
+  },
+
+  "demo_spy": {
+    "subtitle": "sound.mercspeak.demo.spy",
+    "sounds": [
+      "mercspeak:demo_spy1",
+      "mercspeak:demo_spy2",
+      "mercspeak:demo_spy3",
+      "mercspeak:demo_spy_scout",
+      "mercspeak:demo_spy_soldier",
+      "mercspeak:demo_spy_pyro",
+      "mercspeak:demo_spy_demo",
+      "mercspeak:demo_spy_heavy",
+      "mercspeak:demo_spy_engie",
+      "mercspeak:demo_spy_medic",
+      "mercspeak:demo_spy_sniper",
+      "mercspeak:demo_spy_spy"
+    ]
+  },
+
+  "demo_sentry_ahead": {
+    "subtitle": "sound.mercspeak.demo.sentry_ahead",
+    "sounds": [
+      "mercspeak:demo_sentry_ahead1",
+      "mercspeak:demo_sentry_ahead2",
+      "mercspeak:demo_sentry_ahead3"
+    ]
+  },
+
+  "demo_teleporter": {
+    "subtitle": "sound.mercspeak.demo.teleporter",
+    "sounds": [ "mercspeak:demo_teleporter" ]
+  },
+
+  "demo_dispenser": {
+    "subtitle": "sound.mercspeak.demo.dispenser",
+    "sounds": [ "mercspeak:demo_dispenser" ]
+  },
+
+  "demo_sentry_here": {
+    "subtitle": "sound.mercspeak.demo.sentry_here",
+    "sounds": [ "mercspeak:demo_sentry_here" ]
+  },
+
+  "demo_ubercharge": {
+    "subtitle": "sounds.mercspeak.demo.ubercharge",
+    "sounds": [
+      "mercspeak:demo_ubercharge1",
+      "mercspeak:demo_ubercharge2",
+      "mercspeak:demo_ubercharge3"
+    ]
+  },
+
+  "demo_help": {
+    "subtitle": "sounds.mercspeak.demo.help",
+    "sounds": [
+      "mercspeak:demo_help1",
+      "mercspeak:demo_help2",
+      "mercspeak:demo_help3",
+      "mercspeak:demo_help_f_cp1",
+      "mercspeak:demo_help_f_cp2",
+      "mercspeak:demo_help_f_cp3",
+      "mercspeak:demo_help_e_cp1",
+      "mercspeak:demo_help_e_cp2",
+      "mercspeak:demo_help_e_cp3",
+      "mercspeak:demo_help_e_cp4",
+      "mercspeak:demo_help_e_cp5"
+    ]
+  },
+
+  "demo_cry": {
+    "subtitle": "sounds.mercspeak.demo.cry",
+    "sounds": [
+      "mercspeak:demo_cry1",
+      "mercspeak:demo_cry2",
+      "mercspeak:demo_cry3",
+      "mercspeak:demo_cry4",
+      "mercspeak:demo_cry5",
+      "mercspeak:demo_cry6",
+      "mercspeak:demo_cry7",
+      "mercspeak:demo_cry_aim1",
+      "mercspeak:demo_cry_aim2",
+      "mercspeak:demo_cry_aim3"
+    ]
+  },
+
+  "demo_cheer": {
+    "subtitle": "sounds.mercspeak.demo.cheer",
+    "sounds": [
+      "mercspeak:demo_cheer1",
+      "mercspeak:demo_cheer2",
+      "mercspeak:demo_cheer3",
+      "mercspeak:demo_cheer4",
+      "mercspeak:demo_cheer5",
+      "mercspeak:demo_cheer6",
+      "mercspeak:demo_cheer7",
+      "mercspeak:demo_cheer8"
+    ]
+  },
+
+  "demo_jeer": {
+    "subtitle": "sounds.mercspeak.demo.jeer",
+    "sounds": [
+      "mercspeak:demo_jeer1",
+      "mercspeak:demo_jeer2",
+      "mercspeak:demo_jeer3",
+      "mercspeak:demo_jeer4",
+      "mercspeak:demo_jeer5",
+      "mercspeak:demo_jeer6",
+      "mercspeak:demo_jeer7",
+      "mercspeak:demo_jeer8",
+      "mercspeak:demo_jeer9",
+      "mercspeak:demo_jeer10",
+      "mercspeak:demo_jeer11"
+    ]
+  },
+
+  "demo_positive": {
+    "subtitle": "sounds.mercspeak.demo.positive",
+    "sounds": [
+      "mercspeak:demo_positive1",
+      "mercspeak:demo_positive2",
+      "mercspeak:demo_positive3",
+      "mercspeak:demo_positive4",
+      "mercspeak:demo_positive5",
+      "mercspeak:demo_positive6",
+      "mercspeak:demo_positive7",
+      "mercspeak:demo_positive8"
+    ]
+  },
+
+  "demo_negative": {
+    "subtitle": "sounds.mercspeak.demo.negative",
+    "sounds": [
+      "mercspeak:demo_negative1",
+      "mercspeak:demo_negative2",
+      "mercspeak:demo_negative3",
+      "mercspeak:demo_negative4",
+      "mercspeak:demo_negative5",
+      "mercspeak:demo_negative6"
+    ]
+  },
+
+  "demo_niceshot": {
+    "subtitle": "sounds.mercspeak.demo.niceshot",
+    "sounds": [
+      "mercspeak:demo_niceshot1",
+      "mercspeak:demo_niceshot2",
+      "mercspeak:demo_niceshot3"
+    ]
+  },
+
+  "demo_goodjob": {
+    "subtitle": "sounds.mercspeak.demo.goodjob",
+    "sounds": [
+      "mercspeak:demo_goodjob1",
+      "mercspeak:demo_goodjob2"
+    ]
+  }
+}
