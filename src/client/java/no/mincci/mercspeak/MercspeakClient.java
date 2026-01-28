@@ -4,13 +4,16 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ToggleKeyMapping;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -22,28 +25,35 @@ import org.lwjgl.glfw.GLFW;
 import java.util.*;
 
 public class MercspeakClient implements ClientModInitializer {
-	private static final int VMENU_COOLDOWN_MS = 2000; // don't use tick-based!
-	private static final int VMENU_ANIM_MS = 800;
+	private static final int VMENU_COOLDOWN_TICKS = 40;
+	private static final int VMENU_ANIM_MS = 800; // TODO: pegged to ticks for now, migrate to ms. Add ``
 	private static final int
 			VMENU_X = 3, VMENU_Y = 55,
 			VMENU_U = 0, VMENU_V = 0,
 			VMENU_R_WIDTH = 40 * 2, VMENU_R_HEIGHT = 64 * 2,
 			VMENU_T_WIDTH = 40 * 2, VMENU_T_HEIGHT = 64 * 2;
+	private static final int COLOR_CHAT = 0x256D8D;
 
 
-	private static final NKeymappingLock<VCmd> VC_LOCK = new NKeymappingLock<>(3);
-	private static final NKeymappingLock<VNum> VN_LOCK = new NKeymappingLock<>(8);
+
+	private static final KeyMappingLock<VCmd> VC_LOCK = new KeyMappingLock<>(3);
+	private static final KeyMappingLock<VNum> VN_LOCK = new KeyMappingLock<>(8);
 	private static final Map<Pair<VCmd, VNum>, String> VL_MAP = new HashMap<>(8 + 8 + 8);
 
 	private static final Identifier texVMenu = Mercspeak.resolveIdPath("textures/vmenu.png");
 
-	private static int tsVMenuFade = 0; // timestamp at which to end anim
-	private static int tsVMenuCooldown = 0;
-	private static boolean isVMenuFadeIn = false;
+	private static MsTimer timerVMenuFade = new MsTimer(VMENU_ANIM_MS); // for both fade-in and fade-out; fade-out == !isFadeIn
+	private static AgnosticTimer timerVMenuCooldown = new AgnosticTimer(VMENU_COOLDOWN_TICKS);
+	private static boolean isFadeIn = true;
 
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
+
+		/*
+		 * PARTICLE(s)
+		 */
+		ParticleFactoryRegistry.getInstance().register(Mercspeak.CHITCHAT_PARTICLE, EndRodParticle.Provider::new);
 
 		/*
 		 * HUD
@@ -116,14 +126,20 @@ public class MercspeakClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player == null) return;
 
+			timerVMenuCooldown.step(); // note that AgnosticTimers do not step if not active!
+
 			VC_LOCK.update();
 			VN_LOCK.update();
 
 			Optional<VCmd> vcCand = VC_LOCK.poll();
 			Optional<VNum> vnCand = VN_LOCK.poll();
 
-			if (vcCand.isPresent() && vnCand.isPresent()) {
-				client.player.displayClientMessage(Component.translatable(String.format("text.demo.%s", VL_MAP.get(Pair.of(vcCand.get(), vnCand.get())))), true);
+			if (vcCand.isPresent() && vnCand.isPresent() && timerVMenuCooldown.poll()) {
+				client.player.displayClientMessage(
+						Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_CHAT)
+								.append(Component.translatable("text.mercspeak.chat_sep")).withStyle(ChatFormatting.WHITE)
+								.append(Component.translatable(String.format("text.mercspeak.%s", VL_MAP.get(Pair.of(vcCand.get(), vnCand.get()))))), false);
+				timerVMenuCooldown.reset();
 			}
 		});
 	}
@@ -170,11 +186,11 @@ public class MercspeakClient implements ClientModInitializer {
 	}
 }
 
-/// Lock mechanism for first of n `KeyMapping`s polled in insertion order.
-/// Note that rather than registering callback, the lock user should manually
-/// lock on use.
-class NKeymappingLock<E> {
-	public NKeymappingLock(int n) {
+/// Lock mechanism for first of n [KeyMapping] polled in non-guaranteed order.
+/// It is recommended to ensure the invariant of only one keymapping being down,
+/// otherwise use [NKeyMappingLock].
+class KeyMappingLock<E> {
+	public KeyMappingLock(int n) {
 		keymappings = new HashMap<>(n);
 		lastPoll = null;
 	}
@@ -183,7 +199,7 @@ class NKeymappingLock<E> {
         keymappings.put(mapping, enumVal);
 	}
 
-	public void update() {
+	public void update() { // TODO: does `parallelStream` guarantee insertion order priority?
 		this.lastPoll = this.keymappings.entrySet().parallelStream()
 					.filter((e) -> e.getKey().isDown())
 					.findFirst()

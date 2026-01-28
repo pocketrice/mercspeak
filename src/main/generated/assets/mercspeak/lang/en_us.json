@@ -1,4 +1,7 @@
 {
+  "text.mercspeak.cancel": "Cancel",
+  "text.mercspeak.chat_prefix": "(Voice) %1$s",
+  "text.mercspeak.chat_sep": ": ",
   "text.mercspeak.cheer": "Cheers",
   "text.mercspeak.cry": "Battle Cry",
   "text.mercspeak.dispenser": "Dispenser Here",

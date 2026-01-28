@@ -2,7 +2,9 @@ package no.mincci.mercspeak;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -10,6 +12,8 @@ import org.slf4j.LoggerFactory;
 
 public class Mercspeak implements ModInitializer {
 	public static final String MOD_ID = "mercspeak";
+
+	public static final SimpleParticleType CHITCHAT_PARTICLE = FabricParticleTypes.simple();
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -28,5 +32,6 @@ public class Mercspeak implements ModInitializer {
 
 		LOGGER.info("holy dooley!");
 		ModSounds.initialize();
+		Registry.register(BuiltInRegistries.PARTICLE_TYPE, Mercspeak.resolveIdPath("chitchat_particle"), CHITCHAT_PARTICLE);
 	}
 }

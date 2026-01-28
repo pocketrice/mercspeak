@@ -43,5 +43,8 @@ public class MercspeakEnUsLangProvider extends FabricLanguageProvider {
         translationBuilder.add("text.mercspeak.goodjob", "Good Job");
 
         translationBuilder.add("text.mercspeak.cancel", "Cancel");
+
+        translationBuilder.add("text.mercspeak.chat_prefix", "(Voice) %1$s");
+        translationBuilder.add("text.mercspeak.chat_sep", ": ");
     }
 }
