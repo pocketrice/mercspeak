@@ -13,32 +13,35 @@ public class MercspeakEnUsLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider wrapperLookup, TranslationBuilder translationBuilder) {
-        translationBuilder.add("text.demo.medic", "MEDIC!");
-        translationBuilder.add("text.demo.thanks", "Thanks!");
-        translationBuilder.add("text.demo.go", "Go Go Go!");
-        translationBuilder.add("text.demo.move", "Move Up!");
-        translationBuilder.add("text.demo.left", "Go Left");
-        translationBuilder.add("text.demo.right", "Go Right");
-        translationBuilder.add("text.demo.yes", "Yes");
-        translationBuilder.add("text.demo.no", "No");
+        translationBuilder.add("text.mercspeak.medic", "MEDIC!");
+        translationBuilder.add("text.mercspeak.thanks", "Thanks!");
+        translationBuilder.add("text.mercspeak.go", "Go Go Go!");
+        translationBuilder.add("text.mercspeak.move", "Move Up!");
+        translationBuilder.add("text.mercspeak.left", "Go Left");
+        translationBuilder.add("text.mercspeak.right", "Go Right");
+        translationBuilder.add("text.mercspeak.yes", "Yes");
+        translationBuilder.add("text.mercspeak.no", "No");
         // pass time
 
-        translationBuilder.add("text.demo.incoming", "Incoming");
-        translationBuilder.add("text.demo.spy", "Spy!");
-        translationBuilder.add("text.demo.sentry_ahead", "Sentry Ahead!");
-        translationBuilder.add("text.demo.teleporter", "Teleporter Here");
-        translationBuilder.add("text.demo.dispenser", "Dispenser Here");
-        translationBuilder.add("text.demo.sentry_here", "Sentry Here");
-        translationBuilder.add("text.demo.ubercharge", "Activate Übercharge!");
+        translationBuilder.add("text.mercspeak.incoming", "Incoming");
+        translationBuilder.add("text.mercspeak.spy", "Spy!");
+        translationBuilder.add("text.mercspeak.sentry_ahead", "Sentry Ahead!");
+        translationBuilder.add("text.mercspeak.teleporter", "Teleporter Here");
+        translationBuilder.add("text.mercspeak.dispenser", "Dispenser Here");
+        translationBuilder.add("text.mercspeak.sentry_here", "Sentry Here");
+        translationBuilder.add("text.mercspeak.ubercharge", "Activate ÜberCharge!");
+        translationBuilder.add("text.mercspeak.ubercharge_ready", "MEDIC: ÜberCharge Ready");
         // pass time
 
-        translationBuilder.add("text.demo.help", "Help!");
-        translationBuilder.add("text.demo.cry", "Battle Cry");
-        translationBuilder.add("text.demo.cheer", "Cheers");
-        translationBuilder.add("text.demo.jeer", "Jeers");
-        translationBuilder.add("text.demo.positive", "Positive");
-        translationBuilder.add("text.demo.negative", "Negative");
-        translationBuilder.add("text.demo.niceshot", "Nice Shot");
-        translationBuilder.add("text.demo.goodjob", "Good Job");
+        translationBuilder.add("text.mercspeak.help", "Help!");
+        translationBuilder.add("text.mercspeak.cry", "Battle Cry");
+        translationBuilder.add("text.mercspeak.cheer", "Cheers");
+        translationBuilder.add("text.mercspeak.jeer", "Jeers");
+        translationBuilder.add("text.mercspeak.positive", "Positive");
+        translationBuilder.add("text.mercspeak.negative", "Negative");
+        translationBuilder.add("text.mercspeak.niceshot", "Nice Shot");
+        translationBuilder.add("text.mercspeak.goodjob", "Good Job");
+
+        translationBuilder.add("text.mercspeak.cancel", "Cancel");
     }
 }
