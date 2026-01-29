@@ -45,8 +45,16 @@ class AgnosticTimer implements Timer {
     }
 
     @Override
-    public boolean poll() {
-        return !this.isActive || this.counter == 0;
+    public TimerState poll() {
+        // RUNNING = !isFinished && isActive
+        // DONE = isFinished && !isActive
+        // INACTIVE = !isActive
+        if (!isActive) {
+            return TimerState.INACTIVE;
+        } else {
+            boolean isFinished = this.counter == 0;
+            return (isFinished) ? TimerState.DONE : TimerState.RUNNING;
+        }
     }
 
     private final long start, step;
@@ -72,6 +80,7 @@ class MsTimer implements Timer {
 
     @Override
     public void reset() {
+        this.stop();
         this.start();
     }
 
@@ -82,13 +91,24 @@ class MsTimer implements Timer {
 
     @Override
     public void start() {
-        this.start_ms = Util.getMillis();
-        this.isActive = true;
+        if (!this.isActive) {
+            this.start_ms = Util.getMillis();
+            this.isActive = true;
+        }
     }
 
     @Override
-    public boolean poll() { // note that isActive is technically only updated here, but this is only access point so safe.
-         return !this.isActive || Util.getMillis() > this.start_ms + duration;
+    public TimerState poll() {
+        // RUNNING = !isFinished && isActive
+        // DONE = isFinished && isActive
+        // INACTIVE = !isActive
+
+        if (!isActive) {
+            return TimerState.INACTIVE;
+        } else {
+            boolean isMsExceeded = Util.getMillis() > this.start_ms + this.duration;
+            return (isMsExceeded) ? TimerState.DONE : TimerState.RUNNING;
+        }
     }
 
     private final long duration;
@@ -101,5 +121,11 @@ public interface Timer {
     void reset();
     void stop();
     void start();
-    boolean poll();
+    TimerState poll();
+}
+
+enum TimerState {
+    RUNNING,
+    DONE,
+    INACTIVE
 }
