@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
@@ -63,23 +62,27 @@ public class MercspeakClient implements ClientModInitializer {
 		/*
 		 * KEYBINDS
 		 */
-		KeyMapping.Category categoryVCmd = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_cmd"));
-		KeyMapping.Category categoryVNum = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_num"));
+		KeyMapping.Category categoryVMenu = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_menu"));
+		KeyMapping.Category categoryVMisc = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_misc"));
 
-		KeyMapping bindingVCmdA = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_a", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, categoryVCmd));
-		KeyMapping bindingVCmdB = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_b", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, categoryVCmd));
-		KeyMapping bindingVCmdC = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_c", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, categoryVCmd));
+		KeyMapping bindingVCmdA = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_a", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, categoryVMenu));
+		KeyMapping bindingVCmdB = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_b", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, categoryVMenu));
+		KeyMapping bindingVCmdC = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_c", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C, categoryVMenu));
 
-		KeyMapping bindingVNum1 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_1, categoryVNum));
-		KeyMapping bindingVNum2 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_2, categoryVNum));
-		KeyMapping bindingVNum3 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_3, categoryVNum));
-		KeyMapping bindingVNum4 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_4", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_4, categoryVNum));
-		KeyMapping bindingVNum5 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_5", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_5, categoryVNum));
-		KeyMapping bindingVNum6 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_6", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_6, categoryVNum));
-		KeyMapping bindingVNum7 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_7", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_7, categoryVNum));
-		KeyMapping bindingVNum8 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_8", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_8, categoryVNum));
+		KeyMapping bindingVNum1 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_1", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_1, categoryVMenu));
+		KeyMapping bindingVNum2 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_2", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_2, categoryVMenu));
+		KeyMapping bindingVNum3 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_3", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_3, categoryVMenu));
+		KeyMapping bindingVNum4 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_4", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_4, categoryVMenu));
+		KeyMapping bindingVNum5 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_5", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_5, categoryVMenu));
+		KeyMapping bindingVNum6 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_6", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_6, categoryVMenu));
+		KeyMapping bindingVNum7 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_7", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_7, categoryVMenu));
+		KeyMapping bindingVNum8 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_8", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_8, categoryVMenu));
 //		KeyMapping bindingVNum9 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_9", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_9, categoryVNum));
 //		KeyMapping bindingVNum0 = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_num_0", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_0, categoryVNum));
+
+		KeyMapping bindingKill = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.bind_kill", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_EQUAL, categoryVMisc));
+		KeyMapping bindingExplode = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.bind_explode", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_MINUS, categoryVMisc));
+		KeyMapping bindingTaunt = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.taunt", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, categoryVMisc));
 
 		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_1), "medic");
 		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_2), "thanks");
@@ -139,11 +142,12 @@ public class MercspeakClient implements ClientModInitializer {
                     : vc);
 
 			if (activeVMenu != null && vnCand.isPresent() && timerVMenuCooldown.poll() != TimerState.RUNNING) {
+				VNum vn = vnCand.get();
 				client.player.displayClientMessage(
 						Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_CHAT)
 								.append(Component.translatable("text.mercspeak.chat_sep")).withStyle(ChatFormatting.WHITE)
-								.append(Component.translatable(String.format("text.mercspeak.%s", VL_MAP.get(Pair.of(activeVMenu, vnCand.get()))))), false);
-
+								.append(Component.translatable(String.format("text.mercspeak.%s", VL_MAP.get(Pair.of(activeVMenu, vn))))), false);
+				client.player.playSound(ModSounds.DEMO_EVENTS.get(VType.from(activeVMenu, vn)), 1f, 1f);
 				timerVMenuCooldown.reset();
 				activeVMenu = null; // if call is done, close the menu!
 			}
@@ -168,25 +172,6 @@ public class MercspeakClient implements ClientModInitializer {
 				i++;
 			}
 		}
-	}
-
-	enum VCmd {
-		VCMD_A,
-		VCMD_B,
-		VCMD_C,
-	}
-
-	enum VNum {
-		VNUM_1,
-		VNUM_2,
-		VNUM_3,
-		VNUM_4,
-		VNUM_5,
-		VNUM_6,
-		VNUM_7,
-		VNUM_8,
-//		VNUM_9,
-//		VNUM_0,
 	}
 }
 
@@ -237,32 +222,3 @@ class KeyMappingLatch<E> {
 	private final TreeMap<@NotNull E, @NotNull KeyMapping> keymappings;
 	private @Nullable E lastTogglePoll, lastDepressPoll;
 }
-//
-//class NKeyMappingLatch<E> {
-//	public NKeyMappingLatch(int n) {
-//		this.keymappings = new HashMap<>(n);
-//		this.lastPoll = new HashMap<>(n); // should not resize lastPoll!
-//		this.capacity = n;
-//	}
-//
-//	public void register(@NotNull KeyMapping mapping, @NotNull E enumVal) {
-//		assert this.keymappings.size() <= this.capacity : "Cannot register beyond NKeyMappingLock capacity";
-//		this.keymappings.put(mapping, enumVal);
-//		this.lastPoll.put(enumVal, false);
-//	}
-//
-//	public void update() {
-//		for (Map.Entry<KeyMapping, E> entry : this.keymappings.entrySet()) {
-//			this.lastPoll.put(entry.getValue(), entry.getKey().isDown());
-//		}
-//	}
-//
-//	public Map<E, Boolean> poll() {
-//		return this.lastPoll;
-//	}
-//
-//
-//	private final int capacity;
-//	private final Map<@NotNull KeyMapping, @NotNull E> keymappings;
-//	private Map<E, Boolean> lastPoll;
-//}

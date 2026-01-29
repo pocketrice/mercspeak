@@ -3,13 +3,13 @@
 	"id": "mercspeak",
 	"version": "${version}",
 	"name": "mercspeak",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "The most fun you can have online!",
 	"authors": [
-		"Me!"
+		"pocketrice"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/pocketrice/mercspeak",
+		"sources": "https://github.com/pocketrice/mercspeak"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/mercspeak/icon.png",

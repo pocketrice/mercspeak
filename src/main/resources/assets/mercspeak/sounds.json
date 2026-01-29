@@ -1,5 +1,5 @@
 {
-  "demo_medic": {
+  "demo.medic": {
     "subtitle": "sound.mercspeak.demo.medic",
     "sounds": [
       "mercspeak:demo_medic1",
@@ -8,7 +8,7 @@
     ]
   },
 
-  "demo_thanks": {
+  "demo.thanks": {
     "subtitle": "sound.mercspeak.demo.thanks",
     "sounds": [
       "mercspeak:demo_thanks1",
@@ -19,7 +19,7 @@
     ]
   },
 
-  "demo_go": {
+  "demo.go": {
     "subtitle": "sound.mercspeak.demo.go",
     "sounds": [
       "mercspeak:demo_go1",
@@ -28,7 +28,7 @@
     ]
   },
 
-  "demo_move": {
+  "demo.move": {
     "subtitle": "sound.mercspeak.demo.move",
     "sounds": [
       "mercspeak:demo_move1",
@@ -37,7 +37,7 @@
     ]
   },
 
-  "demo_left": {
+  "demo.left": {
     "subtitle": "sound.mercspeak.demo.left",
     "sounds": [
       "mercspeak:demo_left1",
@@ -46,7 +46,7 @@
     ]
   },
 
-  "demo_right": {
+  "demo.right": {
     "subtitle": "sound.mercspeak.demo.right",
     "sounds": [
       "mercspeak:demo_right1",
@@ -55,7 +55,7 @@
     ]
   },
 
-  "demo_yes": {
+  "demo.yes": {
     "subtitle": "sound.mercspeak.demo.yes",
     "sounds": [
       "mercspeak:demo_yes1",
@@ -64,7 +64,7 @@
     ]
   },
 
-  "demo_no": {
+  "demo.no": {
     "subtitle": "sound.mercspeak.demo.no",
     "sounds": [
       "mercspeak:demo_no1",
@@ -73,7 +73,7 @@
     ]
   },
 
-  "demo_incoming": {
+  "demo.incoming": {
     "subtitle": "sound.mercspeak.demo.incoming",
     "sounds": [
       "mercspeak:demo_incoming1",
@@ -82,7 +82,7 @@
     ]
   },
 
-  "demo_spy": {
+  "demo.spy": {
     "subtitle": "sound.mercspeak.demo.spy",
     "sounds": [
       "mercspeak:demo_spy1",
@@ -100,7 +100,7 @@
     ]
   },
 
-  "demo_sentry_ahead": {
+  "demo.sentry_ahead": {
     "subtitle": "sound.mercspeak.demo.sentry_ahead",
     "sounds": [
       "mercspeak:demo_sentry_ahead1",
@@ -109,22 +109,22 @@
     ]
   },
 
-  "demo_teleporter": {
+  "demo.teleporter": {
     "subtitle": "sound.mercspeak.demo.teleporter",
     "sounds": [ "mercspeak:demo_teleporter" ]
   },
 
-  "demo_dispenser": {
+  "demo.dispenser": {
     "subtitle": "sound.mercspeak.demo.dispenser",
     "sounds": [ "mercspeak:demo_dispenser" ]
   },
 
-  "demo_sentry_here": {
+  "demo.sentry_here": {
     "subtitle": "sound.mercspeak.demo.sentry_here",
     "sounds": [ "mercspeak:demo_sentry_here" ]
   },
 
-  "demo_ubercharge": {
+  "demo.ubercharge": {
     "subtitle": "sounds.mercspeak.demo.ubercharge",
     "sounds": [
       "mercspeak:demo_ubercharge1",
@@ -133,7 +133,7 @@
     ]
   },
 
-  "demo_help": {
+  "demo.help": {
     "subtitle": "sounds.mercspeak.demo.help",
     "sounds": [
       "mercspeak:demo_help1",
@@ -142,7 +142,7 @@
     ]
   },
 
-  "demo_cry": {
+  "demo.cry": {
     "subtitle": "sounds.mercspeak.demo.cry",
     "sounds": [
       "mercspeak:demo_cry1",
@@ -158,7 +158,7 @@
     ]
   },
 
-  "demo_cheer": {
+  "demo.cheer": {
     "subtitle": "sounds.mercspeak.demo.cheer",
     "sounds": [
       "mercspeak:demo_cheer1",
@@ -172,7 +172,7 @@
     ]
   },
 
-  "demo_jeer": {
+  "demo.jeer": {
     "subtitle": "sounds.mercspeak.demo.jeer",
     "sounds": [
       "mercspeak:demo_jeer1",
@@ -189,7 +189,7 @@
     ]
   },
 
-  "demo_positive": {
+  "demo.positive": {
     "subtitle": "sounds.mercspeak.demo.positive",
     "sounds": [
       "mercspeak:demo_positive1",
@@ -203,7 +203,7 @@
     ]
   },
 
-  "demo_negative": {
+  "demo.negative": {
     "subtitle": "sounds.mercspeak.demo.negative",
     "sounds": [
       "mercspeak:demo_negative1",
@@ -215,7 +215,7 @@
     ]
   },
 
-  "demo_niceshot": {
+  "demo.niceshot": {
     "subtitle": "sounds.mercspeak.demo.niceshot",
     "sounds": [
       "mercspeak:demo_niceshot1",
@@ -224,7 +224,7 @@
     ]
   },
 
-  "demo_goodjob": {
+  "demo.goodjob": {
     "subtitle": "sounds.mercspeak.demo.goodjob",
     "sounds": [
       "mercspeak:demo_goodjob1",
