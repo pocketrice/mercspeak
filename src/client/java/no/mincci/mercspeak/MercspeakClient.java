@@ -7,17 +7,18 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.lwjgl.glfw.GLFW;
@@ -25,8 +26,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.*;
 
 public class MercspeakClient implements ClientModInitializer {
-	private static final int VMENU_COOLDOWN_TICKS = 40;
-	private static final int VMENU_ANIM_MS = 100;
+	private static final int VMENU_COOLDOWN_TICKS = 30;
+	private static final int VMENU_ANIM_MS = 200;
 	private static final int
 			VMENU_X = 3, VMENU_Y = 55,
 			VMENU_U = 0, VMENU_V = 0,
@@ -36,14 +37,18 @@ public class MercspeakClient implements ClientModInitializer {
 
 	private static final KeyMappingLatch<VCmd> VC_LATCH = new KeyMappingLatch<>();
 	private static final KeyMappingLatch<VNum> VN_LATCH = new KeyMappingLatch<>();
-	private static final Map<Pair<VCmd, VNum>, String> VL_MAP = new HashMap<>(8 + 8 + 8);
+	private static final Map<VCmd, String[]> VL_MAP = new HashMap<>(8 + 8 + 8);
 
 	private static final Identifier texVMenu = Mercspeak.resolveIdPath("textures/vmenu.png");
 
 	private static final MsTimer timerVMenuFade = new MsTimer(VMENU_ANIM_MS); // for both fade-in and fade-out; fade-out == !isFadeIn
 	private static final AgnosticTimer timerVMenuCooldown = new AgnosticTimer(VMENU_COOLDOWN_TICKS);
-	private static @Nullable VCmd activeVMenu = null;
+	private static @Nullable VCmd activeVMenu;
 	private static boolean isFadeIn = true;
+
+	private static String[] activeVNums;
+	private static Mercenary currentMerc = Mercenary.DEMOMAN;
+
 
 	@Override
 	public void onInitializeClient() {
@@ -84,32 +89,19 @@ public class MercspeakClient implements ClientModInitializer {
 		KeyMapping bindingExplode = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.bind_explode", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_MINUS, categoryVMisc));
 		KeyMapping bindingTaunt = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.taunt", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, categoryVMisc));
 
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_1), "medic");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_2), "thanks");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_3), "go");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_4), "move");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_5), "left");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_6), "right");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_7), "yes");
-		VL_MAP.put(Pair.of(VCmd.VCMD_A, VNum.VNUM_8), "no");
+		String[] vNumsetA = Arrays.stream(VType.category(VCmd.VCMD_A))
+				.map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+				.toArray(String[]::new);
+		String[] vNumsetB = Arrays.stream(VType.category(VCmd.VCMD_B))
+				.map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+				.toArray(String[]::new);
+		String[] vNumsetC = Arrays.stream(VType.category(VCmd.VCMD_C))
+				.map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+				.toArray(String[]::new);
 
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_1), "incoming");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_2), "spy");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_3), "sentry_ahead");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_4), "teleporter");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_5), "dispenser");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_6), "sentry_here");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_7), "ubercharge");
-		VL_MAP.put(Pair.of(VCmd.VCMD_B, VNum.VNUM_8), "ubercharge_ready");
-
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_1), "help");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_2), "cry");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_3), "cheer");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_4), "jeer");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_5), "positive");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_6), "negative");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_7), "niceshot");
-		VL_MAP.put(Pair.of(VCmd.VCMD_C, VNum.VNUM_8), "goodjob");
+		VL_MAP.put(VCmd.VCMD_A, vNumsetA);
+		VL_MAP.put(VCmd.VCMD_B, vNumsetB);
+		VL_MAP.put(VCmd.VCMD_C, vNumsetC);
 
 		VC_LATCH.register(VCmd.VCMD_A, bindingVCmdA);
 		VC_LATCH.register(VCmd.VCMD_B, bindingVCmdB);
@@ -137,35 +129,79 @@ public class MercspeakClient implements ClientModInitializer {
 			Optional<VCmd> vcCand = VC_LATCH.poll_depress();
 			Optional<VNum> vnCand = VN_LATCH.poll_depress();
 
-            vcCand.ifPresent(vc -> activeVMenu = (activeVMenu == vc)  // close if same keyed, otherwise set to new key.
-                    ? null
-                    : vc);
+            vcCand.ifPresent(vc -> {
+				if (!timerVMenuFade.isRunning()) { // close if same keyed, otherwise set to new key. Lock if animation is running.
 
-			if (activeVMenu != null && vnCand.isPresent() && timerVMenuCooldown.poll() != TimerState.RUNNING) {
+					// activeVMenu == vc (FADE OUT)
+					// activeVMenu == null (FADE IN)
+
+					// this is compacted (more efficient?) form of the following:
+					// ```
+					// if (activeVMenu == vc) {
+					//		timerVMenuFade.reset();
+					//		isFadeIn = false;
+					//		activeVMenu = null*;
+					// } elif (activeVMenu == null) {
+					//		timerVMenuFade.reset();
+					//		isFadeIn = true;
+					//		activeVMenu = vc;
+					// } else {
+					//		activeVMenu = vc;
+ 					// }
+
+					// ...again simple non-const pattern matching from Rust would have been so nice :<
+					boolean isMenuNegation = (activeVMenu == vc);
+					boolean wasMenuClosed = (activeVMenu == null);
+
+					if (isMenuNegation || wasMenuClosed) { // initiate fade anim?
+						timerVMenuFade.reset();
+						isFadeIn = wasMenuClosed;
+					}
+
+					if (isMenuNegation) { // handle vmenu switch/close
+						activeVMenu = null;
+					} else {
+						activeVMenu = vc;
+						activeVNums = VL_MAP.get(vc);
+					}
+				}
+			});
+
+			if (activeVMenu != null && vnCand.isPresent() && !timerVMenuCooldown.isRunning() ) { // if not locked fading out and not on cooldown, proc vcmd.
 				VNum vn = vnCand.get();
 				client.player.displayClientMessage(
 						Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_CHAT)
 								.append(Component.translatable("text.mercspeak.chat_sep")).withStyle(ChatFormatting.WHITE)
-								.append(Component.translatable(String.format("text.mercspeak.%s", VL_MAP.get(Pair.of(activeVMenu, vn))))), false);
-				client.player.playSound(ModSounds.DEMO_EVENTS.get(VType.from(activeVMenu, vn)), 1f, 1f);
+								.append(Component.translatable(activeVNums[vn.index()])), false);
+				client.player.playSound(ModSounds.MERC_EVENTS.get(Pair.of(currentMerc, VType.from(activeVMenu, vn))), 1f, 1f);
+
 				timerVMenuCooldown.reset();
-				activeVMenu = null; // if call is done, close the menu!
+				timerVMenuFade.reset();
+				activeVMenu = null;
+				isFadeIn = false;
+				//activeVMenu = null; // if call is done, close the menu!
 			}
 		});
+
+		ServerTickEvents.START_SERVER_TICK.register(server -> {
+
+		});
+
 	}
 
 	private static void render_hud(GuiGraphics context, DeltaTracker tickCounter) {
-		if (activeVMenu != null) {
+		if (activeVMenu != null || timerVMenuFade.isRunning()) {
 			timerVMenuFade.start();
 			float lerpFade = (isFadeIn) ? 1f - timerVMenuFade.lerp() : timerVMenuFade.lerp();
 			int opacityFade = ((int)(0xB0 * lerpFade) << 0x18) + 0x00EFEFEF;
 			context.blit(RenderPipelines.GUI_TEXTURED, texVMenu, VMENU_X, VMENU_Y, VMENU_U, VMENU_V, VMENU_R_WIDTH, VMENU_R_HEIGHT, VMENU_T_WIDTH, VMENU_T_HEIGHT, opacityFade);
 
+			Font fontMc = Minecraft.getInstance().font;
 			int i = 1;
-			for (VNum vn : VNum.values()) {
+			for (String vn : activeVNums) {
 				context.drawString(
-						Minecraft.getInstance().font,
-						String.format("%d. %s", i, Component.translatable(String.format("text.mercspeak.%s", VL_MAP.get(Pair.of(activeVMenu, vn)))).getString()),
+						fontMc,
+						String.format("%d. %s", i, Component.translatable(vn).getString()),
 						10, 50 + 15 * i,
 						opacityFade
 						);
@@ -182,7 +218,7 @@ class KeyMappingLatch<E> {
 		lastTogglePoll = lastDepressPoll = null;
 	}
 
-	public void register(@NotNull E enumVal, @NotNull KeyMapping mapping) {
+	public void register(@NonNull E enumVal, @NonNull KeyMapping mapping) {
         keymappings.put(enumVal, mapping);
 	}
 
@@ -219,6 +255,6 @@ class KeyMappingLatch<E> {
 		return Pair.of(this.poll_toggle(), this.poll_depress());
 	}
 
-	private final TreeMap<@NotNull E, @NotNull KeyMapping> keymappings;
+	private final TreeMap<@NonNull E, @NonNull KeyMapping> keymappings;
 	private @Nullable E lastTogglePoll, lastDepressPoll;
 }

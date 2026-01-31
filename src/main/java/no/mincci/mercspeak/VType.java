@@ -42,6 +42,12 @@ public enum VType {
                 .get(); // SAFETY: every VCmd and VNum value map to an existent VType.
     }
 
+    public static VType[] category(VCmd vc) {
+        return Arrays.stream(VType.values()) // note: while more efficient to pre-alloc 8 slots, don't assume it will always stay 8! for the modders :)
+                .filter(vt -> vt.vc == vc)
+                .toArray(VType[]::new);
+    }
+
     final VCmd vc;
     final VNum vn;
 }

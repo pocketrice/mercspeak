@@ -16,6 +16,7 @@ class AgnosticTimer implements Timer {
         this.isActive = false;
     }
 
+    ///  Steps timer counter down by given interval, stopping at 0.
     public long step() {
         if (isActive) {
             this.counter = Math.max(0, this.counter - this.step);
@@ -23,9 +24,10 @@ class AgnosticTimer implements Timer {
         return this.counter;
     }
 
+    /// Lerps independent of active state since inactive freezes time.
     @Override
     public float lerp() {
-        return (float)this.counter / this.start;
+        return ((float)this.counter / this.start) / this.step;
     }
 
     @Override
@@ -52,9 +54,18 @@ class AgnosticTimer implements Timer {
         if (!isActive) {
             return TimerState.INACTIVE;
         } else {
-            boolean isFinished = this.counter == 0;
-            return (isFinished) ? TimerState.DONE : TimerState.RUNNING;
+            if (this.counter == 0) {
+                this.isActive = false;
+                return TimerState.DONE;
+            } else {
+                return TimerState.RUNNING;
+            }
         }
+    }
+
+    @Override
+    public boolean isRunning() {
+        return isActive && (this.counter > 0);
     }
 
     private final long start, step;
@@ -71,6 +82,7 @@ class MsTimer implements Timer {
         this.isActive = false;
     }
 
+    /// Lerps dependent of active state (0 for inactive) since inactive does not freeze timer.
     @Override
     public float lerp() {
         return (this.isActive)
@@ -106,9 +118,18 @@ class MsTimer implements Timer {
         if (!isActive) {
             return TimerState.INACTIVE;
         } else {
-            boolean isMsExceeded = Util.getMillis() > this.start_ms + this.duration;
-            return (isMsExceeded) ? TimerState.DONE : TimerState.RUNNING;
+            if (Util.getMillis() > this.start_ms + this.duration) { // equivalent to prior `isMsExceeded`
+                this.isActive = false;
+                return TimerState.DONE;
+            } else {
+                return TimerState.RUNNING;
+            }
         }
+    }
+
+    @Override
+    public boolean isRunning() {
+        return isActive && (Util.getMillis() <= this.start_ms + this.duration);
     }
 
     private final long duration;
@@ -117,11 +138,22 @@ class MsTimer implements Timer {
 }
 
 public interface Timer {
+    /// Provides 0-1f depending on timer progress to end value.
+    /// Pipe into an [EasingFunction] to apply an easing function.
     float lerp();
+    /// Stops timer to flush and starts.
     void reset();
+    ///  Deactivates timer irrespective of state.
+    /// This is required for starting new timer.
     void stop();
+    ///  Starts timer if inactive, else no-op.
     void start();
+    ///  Polls current timer state. Polling for done will set it to inactive.
     TimerState poll();
+    /// Shorthand check for if timer is running.
+    /// Note this is slightly more performant than {@link MsTimer#poll()}
+    /// due to branchless, and also will not trip the done poll.
+    boolean isRunning();
 }
 
 enum TimerState {
