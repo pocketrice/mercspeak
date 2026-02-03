@@ -19,7 +19,7 @@ public enum VType {
     DISPENSER(VCmd.VCMD_B, VNum.VNUM_5),
     SENTRY_HERE(VCmd.VCMD_B, VNum.VNUM_6),
     UBERCHARGE(VCmd.VCMD_B, VNum.VNUM_7),
-    UBERCHARGE_READY(VCmd.VCMD_B, VNum.VNUM_8),
+    SCHADENFREUDE(VCmd.VCMD_B, VNum.VNUM_8),
 
     HELP(VCmd.VCMD_C, VNum.VNUM_1),
     CRY(VCmd.VCMD_C, VNum.VNUM_2),
@@ -39,11 +39,11 @@ public enum VType {
         return Arrays.stream(VType.values())
                 .filter(vt -> vt.vc == vc && vt.vn == vn)
                 .findFirst()
-                .get(); // SAFETY: every VCmd and VNum value map to an existent VType.
+                .get(); // SAFETY: every VCmd and VNum value always map to an existent VType.
     }
 
     public static VType[] category(VCmd vc) {
-        return Arrays.stream(VType.values()) // note: while more efficient to pre-alloc 8 slots, don't assume it will always stay 8! for the modders :)
+        return Arrays.stream(VType.values()) // note: while more efficient to pre-alloc 8 slots, don't assume it will always stay 8! for the modders!! :>
                 .filter(vt -> vt.vc == vc)
                 .toArray(VType[]::new);
     }

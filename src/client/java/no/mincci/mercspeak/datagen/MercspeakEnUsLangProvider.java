@@ -3,6 +3,7 @@ package no.mincci.mercspeak.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -12,7 +13,7 @@ public class MercspeakEnUsLangProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(HolderLookup.Provider wrapperLookup, TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.@NonNull Provider wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("text.mercspeak.medic", "MEDIC!");
         translationBuilder.add("text.mercspeak.thanks", "Thanks!");
         translationBuilder.add("text.mercspeak.go", "Go Go Go!");
@@ -29,8 +30,8 @@ public class MercspeakEnUsLangProvider extends FabricLanguageProvider {
         translationBuilder.add("text.mercspeak.teleporter", "Teleporter Here");
         translationBuilder.add("text.mercspeak.dispenser", "Dispenser Here");
         translationBuilder.add("text.mercspeak.sentry_here", "Sentry Here");
-        translationBuilder.add("text.mercspeak.ubercharge", "Activate ÜberCharge!");
-        translationBuilder.add("text.mercspeak.ubercharge_ready", "MEDIC: ÜberCharge Ready");
+        translationBuilder.add("text.mercspeak.ubercharge", "ÜberCharge!");
+        translationBuilder.add("text.mercspeak.schadenfreude", "Schadenfreude");
         // pass time
 
         translationBuilder.add("text.mercspeak.help", "Help!");

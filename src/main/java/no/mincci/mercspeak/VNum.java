@@ -9,9 +9,8 @@ public enum VNum {
     VNUM_6(5),
     VNUM_7(6),
     VNUM_8(7),
-    ;
-//		VNUM_9,
-//		VNUM_0,
+    VNUM_9(8),
+    VNUM_0(9);
 
     VNum(int i) {
         this.index = i;

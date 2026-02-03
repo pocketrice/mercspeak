@@ -73,7 +73,8 @@ class AgnosticTimer implements Timer {
     private boolean isActive;
 }
 
-/// Analogous to [AgnosticTimer] but uses {@link Util#getMillis()}
+
+// Analogous to [AgnosticTimer] but uses {@link Util#getMillis()}
 /// instead.
 class MsTimer implements Timer {
     public MsTimer(long duration_ms) {
@@ -154,10 +155,4 @@ public interface Timer {
     /// Note this is slightly more performant than {@link MsTimer#poll()}
     /// due to branchless, and also will not trip the done poll.
     boolean isRunning();
-}
-
-enum TimerState {
-    RUNNING,
-    DONE,
-    INACTIVE
 }
