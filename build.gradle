@@ -100,4 +100,8 @@ fabricApi {
 	configureDataGeneration() {
 		client = true
 	}
+
+	configureTests {
+		username = "tosya"
+	}
 }

@@ -1,10 +1,13 @@
 package no.mincci.mercspeak;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -12,6 +15,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.commands.synchronization.SingletonArgumentInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
@@ -59,6 +63,19 @@ public class MercspeakClient implements ClientModInitializer {
 		 */
 		ModBinds.initialize();
 
+		/*
+		 * COMMANDS
+		 */
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+			ClassSelCommand.register(dispatcher);
+		});
+
+		ArgumentTypeRegistry.registerArgumentType( // must register both server and client
+				Mercspeak.resolveIdPath("mercenary"),
+				MercenaryArgumentType.class,
+				SingletonArgumentInfo.contextFree(MercenaryArgumentType::new)
+		);
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			if (client.player == null) return;
 
@@ -67,6 +84,8 @@ public class MercspeakClient implements ClientModInitializer {
 						Component.empty(),
 						Minecraft.getInstance().screen));
 			}
+
+
 
 			timerVMenuCooldown.step(); // note that AgnosticTimers do not step if not vc!
 

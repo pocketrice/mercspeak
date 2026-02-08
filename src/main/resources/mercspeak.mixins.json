@@ -3,7 +3,8 @@
 	"package": "no.mincci.mercspeak.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"PlayerDeathMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

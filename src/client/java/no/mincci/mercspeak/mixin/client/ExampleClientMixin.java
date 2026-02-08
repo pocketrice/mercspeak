@@ -1,6 +1,7 @@
 package no.mincci.mercspeak.mixin.client;
 
 import net.minecraft.client.Minecraft;
+import no.mincci.mercspeak.Mercspeak;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

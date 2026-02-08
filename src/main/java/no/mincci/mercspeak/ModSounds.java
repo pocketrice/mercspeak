@@ -52,6 +52,7 @@ public class ModSounds {
     public static final SoundEvent DEMO_NEGATIVE = registerSound("demo.negative");
     public static final SoundEvent DEMO_NICESHOT = registerSound("demo.niceshot");
     public static final SoundEvent DEMO_GOODJOB = registerSound("demo.goodjob");
+    public static final SoundEvent DEMO_PAIN_SHARP = registerSound("demo.pain.sharp");
 
     public static final SoundEvent ENGIE_MEDIC = registerSound("engie.medic");
     public static final SoundEvent ENGIE_THANKS = registerSound("engie.thanks");

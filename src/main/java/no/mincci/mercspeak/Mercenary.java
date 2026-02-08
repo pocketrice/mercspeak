@@ -1,5 +1,9 @@
 package no.mincci.mercspeak;
 
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
 public enum Mercenary {
     SCOUT,
     SOLDIER,
@@ -41,5 +45,17 @@ public enum Mercenary {
             case 8 -> SPY;
             default -> CIVILIAN;
         };
+    }
+}
+
+class MercenaryArgumentType implements ArgumentType<Mercenary> {
+    @Override
+    public Mercenary parse(StringReader reader) throws CommandSyntaxException {
+        try {
+            String s = reader.readString();
+            return Mercenary.valueOf(s.toUpperCase());
+        } catch (Exception e) {
+            throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("Invalid Mercenary format. Expected valid name.");
+        }
     }
 }
