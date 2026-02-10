@@ -6,7 +6,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import org.jspecify.annotations.NonNull;
 
 public class BtnClassSel extends AbstractWidget {
     private final int index;
@@ -23,25 +25,27 @@ public class BtnClassSel extends AbstractWidget {
     }
 
     @Override
-    public void onClick(MouseButtonEvent event, boolean isDoubleClick) {
+    public void onClick(@NonNull MouseButtonEvent event, boolean isDoubleClick) {
     }
 
     @Override
-    public void onRelease(MouseButtonEvent event) {
+    public void onRelease(@NonNull MouseButtonEvent event) {
         if (true) { // TODO: check for left-click (binded)
-            MercspeakClient.currentMerc = Mercenary.from(index);
+            VPanel.currentMerc = Mercenary.from(index);
             Minecraft.getInstance().setScreen(null);
         }
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+    protected void renderWidget(@NonNull GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         if (this.isHovered()) {
             graphics.requestCursor(this.isActive() ? CursorTypes.POINTING_HAND : CursorTypes.NOT_ALLOWED);
             tint = 0xFFFFFFFF;
+            LocalPlayer player = Minecraft.getInstance().player;
 
-            if (!isFocused) {
-                Minecraft.getInstance().player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[this.index]);
+            if (!isFocused && player != null) {
+                player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[this.index]);
+                ((ISoundManagerExt) Minecraft.getInstance().getSoundManager()).mercspeak_1_21_11$stopSub(Mercspeak.resolveIdFrag("misc.classnote"), null);
             }
             isFocused = true;
         } else {

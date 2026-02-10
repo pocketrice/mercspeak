@@ -201,7 +201,7 @@ public class ModSounds {
     );
 
     private static SoundEvent registerSound(String id) {
-        Identifier identifier = Mercspeak.resolveIdPath(id);
+        Identifier identifier = Mercspeak.resolveId(id);
         return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 

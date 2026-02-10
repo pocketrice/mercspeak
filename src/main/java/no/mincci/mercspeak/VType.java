@@ -48,6 +48,11 @@ public enum VType {
                 .toArray(VType[]::new);
     }
 
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
+    }
+
     final VCmd vc;
     final VNum vn;
 }

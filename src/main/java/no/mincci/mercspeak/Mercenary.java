@@ -46,6 +46,11 @@ public enum Mercenary {
             default -> CIVILIAN;
         };
     }
+
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
+    }
 }
 
 class MercenaryArgumentType implements ArgumentType<Mercenary> {
@@ -55,7 +60,7 @@ class MercenaryArgumentType implements ArgumentType<Mercenary> {
             String s = reader.readString();
             return Mercenary.valueOf(s.toUpperCase());
         } catch (Exception e) {
-            throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("Invalid Mercenary format. Expected valid name.");
+            throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherParseException().create("expected valid mercenary name");
         }
     }
 }

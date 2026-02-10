@@ -4,8 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 
 public class ClassSelCommand {
@@ -18,7 +16,7 @@ public class ClassSelCommand {
 
     private static int selectClass(CommandContext<FabricClientCommandSource> context) {
         Mercenary merc = context.getArgument("mercenary", Mercenary.class);
-        MercspeakClient.currentMerc = merc;
+        VPanel.currentMerc = merc;
         context.getSource().sendFeedback(Component.literal("Client mercenary set to %s".formatted(merc)));
         return 1;
     }

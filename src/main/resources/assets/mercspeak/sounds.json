@@ -281,6 +281,19 @@
     ]
   },
 
+  "demo.pain.sharp": {
+    "subtitle": "sounds.mercspeak.demo.pain.sharp",
+    "sounds": [
+      "mercspeak:demo/pain/demo_pain_sharp1",
+      "mercspeak:demo/pain/demo_pain_sharp2",
+      "mercspeak:demo/pain/demo_pain_sharp3",
+      "mercspeak:demo/pain/demo_pain_sharp4",
+      "mercspeak:demo/pain/demo_pain_sharp5",
+      "mercspeak:demo/pain/demo_pain_sharp6",
+      "mercspeak:demo/pain/demo_pain_sharp7"
+    ]
+  },
+
 
 
 

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import org.jspecify.annotations.NonNull;
 
@@ -30,8 +31,8 @@ public class ClassScreen extends Screen {
 
     @Override
     protected void init() {
-        for (int i = 0; i < circScrollClass; i++) {
-            BtnClassSel classWidget = new BtnClassSel(10 + 70 * i, 150, 50, 50, i);
+        for (int i = 1; i <= circScrollClass; i++) {
+            BtnClassSel classWidget = new BtnClassSel(10 + 70 * (i-1), 150, 50, 50, i % 10);
             this.addRenderableWidget(classWidget);
         }
     }
@@ -46,7 +47,11 @@ public class ClassScreen extends Screen {
 
         Optional<VNum> vn_cand = VNA_LATCH.match(event);
         vn_cand.ifPresent(vn -> {
-            Minecraft.getInstance().player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[vn.index()]);
+            LocalPlayer player = Minecraft.getInstance().player;
+
+            if (player != null) {
+                player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[vn.index()]);
+            }
         });
 
         return true;
@@ -61,6 +66,7 @@ public class ClassScreen extends Screen {
         currScrollClass = (scrollY < 0) // aside: do ternaries compile into CMOVs like C? or no difference??
                 ? ++currScrollClass % circScrollClass
                 : (--currScrollClass + circScrollClass) % circScrollClass;
+
 
        Minecraft.getInstance().player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[currScrollClass]);
 

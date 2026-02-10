@@ -2,52 +2,23 @@ package no.mincci.mercspeak;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.particle.EndRodParticle;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.commands.synchronization.SingletonArgumentInfo;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.nio.charset.Charset;
+import java.util.UUID;
 
 public class MercspeakClient implements ClientModInitializer {
-	private static final int VMENU_COOLDOWN_TICKS = 30;
-	private static final int VMENU_ANIM_MS = 400;
-	private static final int
-			VMENU_X = 3, VMENU_Y = 55,
-			VMENU_U = 0, VMENU_V = 0,
-			VMENU_R_WIDTH = 40 * 2, VMENU_R_HEIGHT = 64 * 2,
-			VMENU_T_WIDTH = 40 * 2, VMENU_T_HEIGHT = 64 * 2;
-	private static final int COLOR_CHAT = 0x256D8D;
-
-	private static final Identifier texVMenu = Mercspeak.resolveIdPath("textures/vmenu.png");
-
-	private static final MsTimer timerVMenuFade = new MsTimer(VMENU_ANIM_MS); // for both fade-in and fade-out; fade-out == !isFadeIn
-	private static final AgnosticTimer timerVMenuCooldown = new AgnosticTimer(VMENU_COOLDOWN_TICKS);
-	private static @Nullable VCmd activeVMenu;
-	private static boolean isFadeIn = true;
-
-	private static String[] activeVNums;
-	protected static Mercenary currentMerc = Mercenary.SPY;
-
-
 	@Override
 	public void onInitializeClient() {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
-
 		/*
 		 * PARTICLE(s)
 		 */
@@ -56,12 +27,7 @@ public class MercspeakClient implements ClientModInitializer {
 		/*
 		 * HUD
 		 */
-		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Mercspeak.resolveIdPath("voice_menu"), MercspeakClient::render_hud);
-
-		/*
-		 * KEYBINDS
-		 */
-		ModBinds.initialize();
+		HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, Mercspeak.resolveId("voice_menu"), VPanel::render);
 
 		/*
 		 * COMMANDS
@@ -71,105 +37,32 @@ public class MercspeakClient implements ClientModInitializer {
 		});
 
 		ArgumentTypeRegistry.registerArgumentType( // must register both server and client
-				Mercspeak.resolveIdPath("mercenary"),
+				Mercspeak.resolveId("mercenary"),
 				MercenaryArgumentType.class,
 				SingletonArgumentInfo.contextFree(MercenaryArgumentType::new)
 		);
 
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			if (client.player == null) return;
+		/*
+		 * etc.
+		 */
 
-			while (ModBinds.BIND_CLASS_SEL.consumeClick()) {
-				Minecraft.getInstance().setScreen(new ClassScreen(
-						Component.empty(),
-						Minecraft.getInstance().screen));
-			}
-
-
-
-			timerVMenuCooldown.step(); // note that AgnosticTimers do not step if not vc!
-
-			ModBinds.VC_LATCH.update_depress();
-			ModBinds.VN_LATCH.update_depress();
-
-			Optional<VCmd> vcCand = ModBinds.VC_LATCH.poll_depress();
-			Optional<VNum> vnCand = ModBinds.VN_LATCH.poll_depress();
-
-            vcCand.ifPresent(vc -> {
-				if (isFadeIn || !timerVMenuFade.isRunning()) { // close if same keyed, otherwise set to new key. Lock if animation is running (only fade out).
-
-					// activeVMenu == vc (FADE OUT)
-					// activeVMenu == null (FADE IN)
-
-					// this is compacted (more efficient?) form of the following:
-					// ```
-					// if (activeVMenu == vc) {
-					//		timerVMenuFade.reset();
-					//		isFadeIn = false;
-					//		activeVMenu = null*;
-					// } elif (activeVMenu == null) {
-					//		timerVMenuFade.reset();
-					//		isFadeIn = true;
-					//		activeVMenu = vc;
-					// } else {
-					//		activeVMenu = vc;
- 					// }
-
-					// ...again simple non-const pattern matching from Rust would have been so nice :<
-					boolean isMenuNegation = (activeVMenu == vc);
-					boolean wasMenuClosed = (activeVMenu == null);
-
-					if (isMenuNegation || wasMenuClosed) { // initiate fade anim?
-						timerVMenuFade.reset();
-						isFadeIn = wasMenuClosed;
-					}
-
-					if (isMenuNegation) { // handle vmenu switch/close
-						activeVMenu = null;
-					} else {
-						activeVMenu = vc;
-						activeVNums = ModBinds.VL_MAP.get(vc);
-					}
-				}
-			});
-
-			if (activeVMenu != null && vnCand.isPresent() && !timerVMenuCooldown.isRunning() ) { // if not locked fading out and not on cooldown, proc vcmd.
-				VNum vn = vnCand.get();
-				client.player.displayClientMessage(
-						Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_CHAT)
-								.append(Component.translatable("text.mercspeak.chat_sep")).withStyle(ChatFormatting.WHITE)
-								.append(Component.translatable(activeVNums[vn.index()])), false);
-				client.player.playSound(ModSounds.SOUNDPACK_MERC.get(Pair.of(currentMerc, VType.from(activeVMenu, vn))), 1f, 1f);
-
-				timerVMenuCooldown.reset();
-				timerVMenuFade.reset();
-				activeVMenu = null;
-				isFadeIn = false;
-				//activeVMenu = null; // if call is done, close the menu!
-			}
-		});
+		ModBinds.initialize();
+		VPanel.initialize();
 	}
 
-	private static void render_hud(GuiGraphics context, DeltaTracker tickCounter) {
-		if (activeVMenu != null || timerVMenuFade.isRunning()) {
-			timerVMenuFade.start();
-			double lerpFade = (isFadeIn)
-					? EasingFunction.EASE_OUT_EXPONENTIAL.apply(1f - timerVMenuFade.lerp())
-					: EasingFunction.EASE_IN_CIRCULAR.apply(timerVMenuFade.lerp());
-			int opacityFade = ((int)(0xB0 * lerpFade) << 0x18) + 0x00EFEFEF;
-			context.blit(RenderPipelines.GUI_TEXTURED, texVMenu, VMENU_X, VMENU_Y, VMENU_U, VMENU_V, VMENU_R_WIDTH, VMENU_R_HEIGHT, VMENU_T_WIDTH, VMENU_T_HEIGHT, opacityFade);
+	public FriendlyByteBuf assembleSoundPlayPacket(Identifier soundId, UUID uuid) {
+		FriendlyByteBuf buf = PacketByteBufs.create(); // { Identifier }
+		buf.writeIdentifier(soundId);
+		buf.writeUUID(uuid);
+		return buf;
+	}
 
-			Font fontMc = Minecraft.getInstance().font;
-			int i = 1;
-			for (String vn : activeVNums) {
-				context.drawString(
-						fontMc,
-						String.format("%d. %s", i, Component.translatable(vn).getString()),
-						10, 50 + 15 * i,
-						opacityFade
-						);
-				i++;
-			}
-		}
+
+	public FriendlyByteBuf assembleSoundStopPacket(String soundIdFrag, UUID uuid) {
+		FriendlyByteBuf buf = PacketByteBufs.create();
+		buf.writeCharSequence(soundIdFrag, Charset.defaultCharset());
+		buf.writeUUID(uuid);
+		return buf;
 	}
 }
+

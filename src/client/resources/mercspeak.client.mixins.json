@@ -3,7 +3,8 @@
   "package": "no.mincci.mercspeak.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ExampleClientMixin"
+    "SoundEngineMixin",
+    "SoundManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

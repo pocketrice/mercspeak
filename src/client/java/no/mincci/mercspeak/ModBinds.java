@@ -17,8 +17,8 @@ public class ModBinds {
     protected static final KeyMappingLatch<VNum> VNA_LATCH = new KeyMappingLatch<>();
     protected static final Map<VCmd, String[]> VL_MAP = new HashMap<>(8 + 8 + 8);
 
-    private static final KeyMapping.Category CATEGORY_VMENU = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_menu"));
-    private static final KeyMapping.Category CATEGORY_VMISC = KeyMapping.Category.register(Mercspeak.resolveIdPath("voice_misc"));
+    private static final KeyMapping.Category CATEGORY_VMENU = KeyMapping.Category.register(Mercspeak.resolveId("voice_menu"));
+    private static final KeyMapping.Category CATEGORY_VMISC = KeyMapping.Category.register(Mercspeak.resolveId("voice_misc"));
 
     private static final KeyMapping BIND_VCMD_A = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_a", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY_VMENU));
     private static final KeyMapping BIND_VCMD_B = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.mercspeak.voice_cmd_b", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_X, CATEGORY_VMENU));
@@ -44,13 +44,13 @@ public class ModBinds {
         Mercspeak.LOGGER.info("Registering {} keybinds!", Mercspeak.MOD_ID);
 
         String[] vNumsetA = Arrays.stream(VType.category(VCmd.VCMD_A))
-                .map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+                .map(vt -> String.format("text.mercspeak.%s", vt.toString()))
                 .toArray(String[]::new);
         String[] vNumsetB = Arrays.stream(VType.category(VCmd.VCMD_B))
-                .map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+                .map(vt -> String.format("text.mercspeak.%s", vt.toString()))
                 .toArray(String[]::new);
         String[] vNumsetC = Arrays.stream(VType.category(VCmd.VCMD_C))
-                .map(vt -> String.format("text.mercspeak.%s", vt.name().toLowerCase()))
+                .map(vt -> String.format("text.mercspeak.%s", vt.toString()))
                 .toArray(String[]::new);
 
         VL_MAP.put(VCmd.VCMD_A, vNumsetA);
