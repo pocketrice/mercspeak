@@ -5,7 +5,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.sounds.SoundSource;
-import no.mincci.mercspeak.ISoundEngineExt;
+import no.mincci.mercspeak.SoundEngineExt;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.Map;
 
 @Mixin(SoundEngine.class)
-public class SoundEngineMixin implements ISoundEngineExt {
+abstract class SoundEngineMixin implements SoundEngineExt {
     @Final @Shadow
     private Multimap<SoundSource, SoundInstance> instanceBySource;
     @Final @Shadow
@@ -25,7 +25,7 @@ public class SoundEngineMixin implements ISoundEngineExt {
     public void stop(SoundInstance sound) {}
 
     @Unique @Override
-    public void mercspeak_1_21_11$stopSub(String soundNameFrag, @Nullable SoundSource category) {
+    public void mercspeak$stopSub(String soundNameFrag, @Nullable SoundSource category) {
         if (category != null) {
             for (SoundInstance soundInstance : this.instanceBySource.get(category)) {
                 if (soundInstance.getIdentifier().toString().startsWith(soundNameFrag)) {

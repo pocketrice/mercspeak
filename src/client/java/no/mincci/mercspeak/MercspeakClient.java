@@ -49,20 +49,5 @@ public class MercspeakClient implements ClientModInitializer {
 		ModBinds.initialize();
 		VPanel.initialize();
 	}
-
-	public FriendlyByteBuf assembleSoundPlayPacket(Identifier soundId, UUID uuid) {
-		FriendlyByteBuf buf = PacketByteBufs.create(); // { Identifier }
-		buf.writeIdentifier(soundId);
-		buf.writeUUID(uuid);
-		return buf;
-	}
-
-
-	public FriendlyByteBuf assembleSoundStopPacket(String soundIdFrag, UUID uuid) {
-		FriendlyByteBuf buf = PacketByteBufs.create();
-		buf.writeCharSequence(soundIdFrag, Charset.defaultCharset());
-		buf.writeUUID(uuid);
-		return buf;
-	}
 }
 

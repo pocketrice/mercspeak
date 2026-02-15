@@ -1,12 +1,12 @@
 package no.mincci.mercspeak;
 
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,6 +17,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Random;
 
 public class Mercspeak implements ModInitializer {
 	public static final String MOD_ID = "mercspeak";
@@ -37,11 +39,15 @@ public class Mercspeak implements ModInitializer {
 		return String.format("%s.%s",  MOD_ID, pathFrag);
 	}
 
+	private Random rng;
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
+
+		rng = new Random();
 
 		LOGGER.info("holy dooley!");
 		ModSounds.initialize();
@@ -66,9 +72,9 @@ public class Mercspeak implements ModInitializer {
 			if (player != null && sound != null) {
 				//Mercspeak.LOGGER.info("OK\n");
 				//player.playSound(sound);
-				player.level().playSound(
-						player, BlockPos.containing(player.position()),
-						sound, SoundSource.PLAYERS, 1f, 1f);
+				player.level().playSeededSound(
+						player, player,
+						Holder.direct(sound), SoundSource.PLAYERS, 1f, 1f, rng.nextLong()); // <-- `ClientBoundEntitySoundPacket` (for tracked locative) requires seed parameter, hence `playSeededSound` is only option!
 			}
 		});
 

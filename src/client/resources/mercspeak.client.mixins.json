@@ -4,7 +4,11 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "SoundEngineMixin",
-    "SoundManagerMixin"
+    "SoundEventRegistrationMixin",
+    "SoundEventRegistrationSerializerMixin",
+    "SoundManagerMixin",
+    "SoundManagerPreparationsMixin",
+    "WeighedSoundEventsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
