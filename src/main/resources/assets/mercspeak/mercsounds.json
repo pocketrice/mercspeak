@@ -1,0 +1,105 @@
+{
+    "merc_contextual": {
+        "scout": [
+            "effect_speed",
+            "effect_strength",
+            "effect_end",
+            "airborne",
+            "arrow_tipped",
+            "arrow_picked"
+        ],
+        "soldier": [
+            "mace"
+        ],
+        "pyro": [
+        ],
+        "demo": [
+            "explosive_primed",
+            "explosive_lit",
+            "charge",
+            "potion"
+        ],
+        "heavy": [
+            "kill",
+            "spawner_break",
+            "quickcharge",
+            "punch",
+            "eat"
+        ],
+        "engie": [
+            "build_dispenser",
+            "build_sentry",
+            "build_teleporter",
+            "pickup_building",
+            "move_building",
+            "replant_building",
+            "sapped_building",
+            "destroy_building",
+            "punch"
+        ],
+        "medic": [
+            "uber_activated"
+        ],
+        "sniper": [
+            "kill_ranged",
+            "kill_ranged_30",
+            "bow_charged"
+        ],
+        "spy": [
+            "backstab"
+        ],
+        "civvie": [
+            "boost_effect",
+            "boost_beacon"
+        ]
+    },
+
+    "voice": [
+        "medic",
+        "thanks",
+        "go",
+        "move",
+        "left",
+        "right",
+        "yes",
+        "no",
+
+        "incoming",
+        "spy",
+        "sentry_ahead",
+        "teleporter",
+        "dispenser",
+        "sentry_here",
+        "ubercharge",
+        "schadenfreude",
+
+        "help",
+        "cry",
+        "cheer",
+        "jeer",
+        "positive",
+        "negative",
+        "nice_shot",
+        "good_job"
+    ],
+
+    "contextual": [
+        "fire",
+        "round_start",
+        "splash",
+        "teleport",
+        "heal",
+        "kill.single",
+        "kill.triple",
+        "achievement",
+        "toss",
+        "destroy_building",
+        "revive",
+
+        "pain.sharp",
+        "pain.severe",
+        "cry.aim",
+
+        "spy.*"
+    ],
+}

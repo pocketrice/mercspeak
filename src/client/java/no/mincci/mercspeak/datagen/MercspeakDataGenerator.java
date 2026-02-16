@@ -9,5 +9,6 @@ public class MercspeakDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = generator.createPack();
 
         pack.addProvider(MercspeakEnUsLangProvider::new);
+        pack.addProvider(MercspeakSoundsProvider::new);
     }
 }

@@ -27,8 +27,8 @@ abstract class SoundManagerMixin implements SoundManagerExt {
     private SoundEngine soundEngine;
 
     @Unique @Override
-    public void mercspeak$stopSub(String soundNameFrag, @Nullable SoundSource category) {
-        ((SoundEngineExt) this.soundEngine).mercspeak$stopSub(soundNameFrag, category);
+    public void mercspeak$stopPrefix(String soundNameFrag, @Nullable SoundSource category) {
+        ((SoundEngineExt) this.soundEngine).mercspeak$stopPrefix(soundNameFrag, category);
     }
 }
 

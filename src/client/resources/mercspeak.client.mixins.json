@@ -8,6 +8,7 @@
     "SoundEventRegistrationSerializerMixin",
     "SoundManagerMixin",
     "SoundManagerPreparationsMixin",
+    "SoundTypeEntryBuilderMixin",
     "WeighedSoundEventsMixin"
   ],
   "injectors": {

@@ -44,7 +44,7 @@ public class RndWaveSoundEvents extends WeighedSoundEvents {
 
 
     /// In-place shuffle, guaranteeing first slot will not match previous permutation's last slot (repeated sound).<br>
-    /// Adapted verbatim from {@link Collections#shuffle(List, RandomGenerator)}.
+    /// Adapted near-verbatim from {@link Collections#shuffle(List, RandomGenerator)}.
     public void shuffle(RandomSource randomSource) {
         if (this.inds.length <= 2) { // 0 and 1 make sense, but 2 is b/c shuffling guarantees [0,1] <-> [1,0] so no need to shuffle (that even breaks order too!)
             return;

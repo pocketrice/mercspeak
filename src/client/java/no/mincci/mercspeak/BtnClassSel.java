@@ -45,7 +45,7 @@ public class BtnClassSel extends AbstractWidget {
 
             if (!isFocused && player != null) {
                 player.playSound(ModSounds.SOUNDPACK_CLASSNOTE[this.index]);
-                ((SoundManagerExt) Minecraft.getInstance().getSoundManager()).mercspeak$stopSub(Mercspeak.resolveIdFrag("misc.classnote"), null);
+                ((SoundManagerExt) Minecraft.getInstance().getSoundManager()).mercspeak$stopPrefix(Mercspeak.resolveIdFrag("misc.classnote"), null);
             }
             isFocused = true;
         } else {

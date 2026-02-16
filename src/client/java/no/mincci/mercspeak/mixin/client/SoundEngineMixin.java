@@ -25,7 +25,7 @@ abstract class SoundEngineMixin implements SoundEngineExt {
     public void stop(SoundInstance sound) {}
 
     @Unique @Override
-    public void mercspeak$stopSub(String soundNameFrag, @Nullable SoundSource category) {
+    public void mercspeak$stopPrefix(String soundNameFrag, @Nullable SoundSource category) {
         if (category != null) {
             for (SoundInstance soundInstance : this.instanceBySource.get(category)) {
                 if (soundInstance.getIdentifier().toString().startsWith(soundNameFrag)) {

@@ -205,11 +205,6 @@ public class ModSounds {
         return Registry.register(BuiltInRegistries.SOUND_EVENT, identifier, SoundEvent.createVariableRangeEvent(identifier));
     }
 
-//    private static SoundEvent registerStyledSound(String id, SoundEventStyle style) {
-//        Identifier identifier = Mercspeak.resolveId(id);
-//        return
-//    }
-
     public static void initialize() {
         Mercspeak.LOGGER.info("Registering {} sounds!", Mercspeak.MOD_ID);
     }

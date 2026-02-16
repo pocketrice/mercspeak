@@ -50,7 +50,7 @@ abstract class SoundEventRegistrationSerializerMixin {
     /// Check and set RNDWAVE flag from deserialisation.
     @Redirect(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/resources/sounds/SoundEventRegistration;", at = @At(value = "NEW", target = "Lnet/minecraft/client/resources/sounds/SoundEventRegistration;"))
     public SoundEventRegistration ctorStyledSoundEventRegistration(List<Sound> sounds, boolean replace, String subtitle, @Local JsonObject jsonObject) throws JsonParseException {
-        boolean isRndWave = !GsonHelper.getAsString(jsonObject, "soundEventType", "").equals(SoundEventStyle.RNDWAVE.toString());
+        boolean isRndWave = GsonHelper.getAsString(jsonObject, "style", "").equals(SoundEventStyle.RNDWAVE.toString());
 
         SoundEventRegistration registration = new SoundEventRegistration(sounds, replace, subtitle);
         ((SoundEventRegistrationExt) registration).mercspeak$setRndWave(isRndWave);

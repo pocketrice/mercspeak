@@ -49,7 +49,8 @@
       "mercspeak:demo/demo_medic1",
       "mercspeak:demo/demo_medic2",
       "mercspeak:demo/demo_medic3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.thanks": {
@@ -60,7 +61,8 @@
       "mercspeak:demo/demo_thanks_kill1",
       "mercspeak:demo/demo_thanks_kill2",
       "mercspeak:demo/demo_thanks_kill3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.go": {
@@ -69,7 +71,8 @@
       "mercspeak:demo/demo_go1",
       "mercspeak:demo/demo_go2",
       "mercspeak:demo/demo_go3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.move": {
@@ -78,7 +81,8 @@
       "mercspeak:demo/demo_move1",
       "mercspeak:demo/demo_move2",
       "mercspeak:demo/demo_move3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.left": {
@@ -87,7 +91,8 @@
       "mercspeak:demo/demo_left1",
       "mercspeak:demo/demo_left2",
       "mercspeak:demo/demo_left3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.right": {
@@ -96,7 +101,8 @@
       "mercspeak:demo/demo_right1",
       "mercspeak:demo/demo_right2",
       "mercspeak:demo/demo_right3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.yes": {
@@ -105,7 +111,8 @@
       "mercspeak:demo/demo_yes1",
       "mercspeak:demo/demo_yes2",
       "mercspeak:demo/demo_yes3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.no": {
@@ -114,7 +121,8 @@
       "mercspeak:demo/demo_no1",
       "mercspeak:demo/demo_no2",
       "mercspeak:demo/demo_no3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.incoming": {
@@ -123,7 +131,8 @@
       "mercspeak:demo/demo_incoming1",
       "mercspeak:demo/demo_incoming2",
       "mercspeak:demo/demo_incoming3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.spy": {
@@ -141,7 +150,8 @@
       "mercspeak:demo/demo_spy_medic",
       "mercspeak:demo/demo_spy_sniper",
       "mercspeak:demo/demo_spy_spy"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.sentry_ahead": {
@@ -150,22 +160,26 @@
       "mercspeak:demo/demo_sentry_ahead1",
       "mercspeak:demo/demo_sentry_ahead2",
       "mercspeak:demo/demo_sentry_ahead3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.teleporter": {
     "subtitle": "sound.mercspeak.demo.teleporter",
-    "sounds": [ "mercspeak:demo/demo_teleporter" ]
+    "sounds": [ "mercspeak:demo/demo_teleporter" ],
+    "style": "rndwave"
   },
 
   "demo.dispenser": {
     "subtitle": "sound.mercspeak.demo.dispenser",
-    "sounds": [ "mercspeak:demo/demo_dispenser" ]
+    "sounds": [ "mercspeak:demo/demo_dispenser" ],
+    "style": "rndwave"
   },
 
   "demo.sentry_here": {
     "subtitle": "sound.mercspeak.demo.sentry_here",
-    "sounds": [ "mercspeak:demo/demo_sentry_here" ]
+    "sounds": [ "mercspeak:demo/demo_sentry_here" ],
+    "style": "rndwave"
   },
 
   "demo.ubercharge": {
@@ -174,12 +188,14 @@
       "mercspeak:demo/demo_ubercharge1",
       "mercspeak:demo/demo_ubercharge2",
       "mercspeak:demo/demo_ubercharge3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.schadenfreude": {
     "subtitle": "sounds.mercspeak.demo.schadenfreude",
-    "sounds": [ "mercspeak:demo/demo_schadenfreude"]
+    "sounds": [ "mercspeak:demo/demo_schadenfreude"],
+    "style": "rndwave"
   },
 
   "demo.help": {
@@ -188,7 +204,8 @@
       "mercspeak:demo/demo_help1",
       "mercspeak:demo/demo_help2",
       "mercspeak:demo/demo_help3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.cry": {
@@ -204,7 +221,8 @@
       "mercspeak:demo/demo_cry_aim1",
       "mercspeak:demo/demo_cry_aim2",
       "mercspeak:demo/demo_cry_aim3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.cheer": {
@@ -218,7 +236,8 @@
       "mercspeak:demo/demo_cheer6",
       "mercspeak:demo/demo_cheer7",
       "mercspeak:demo/demo_cheer8"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.jeer": {
@@ -235,7 +254,8 @@
       "mercspeak:demo/demo_jeer9",
       "mercspeak:demo/demo_jeer10",
       "mercspeak:demo/demo_jeer11"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.positive": {
@@ -249,7 +269,8 @@
       "mercspeak:demo/demo_positive6",
       "mercspeak:demo/demo_positive7",
       "mercspeak:demo/demo_positive8"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.negative": {
@@ -261,7 +282,8 @@
       "mercspeak:demo/demo_negative4",
       "mercspeak:demo/demo_negative5",
       "mercspeak:demo/demo_negative6"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.niceshot": {
@@ -270,7 +292,8 @@
       "mercspeak:demo/demo_niceshot1",
       "mercspeak:demo/demo_niceshot2",
       "mercspeak:demo/demo_niceshot3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.goodjob": {
@@ -278,7 +301,8 @@
     "sounds": [
       "mercspeak:demo/demo_goodjob1",
       "mercspeak:demo/demo_goodjob2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "demo.pain.sharp": {
@@ -291,7 +315,8 @@
       "mercspeak:demo/pain/demo_pain_sharp5",
       "mercspeak:demo/pain/demo_pain_sharp6",
       "mercspeak:demo/pain/demo_pain_sharp7"
-    ]
+    ],
+    "style": "rndwave"
   },
 
 
@@ -303,7 +328,8 @@
       "mercspeak:engie/engie_medic1",
       "mercspeak:engie/engie_medic2",
       "mercspeak:engie/engie_medic3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.thanks": {
@@ -312,7 +338,8 @@
       "mercspeak:engie/engie_thanks",
       "mercspeak:engie/engie_thanks_kill1",
       "mercspeak:engie/engie_thanks_kill2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.go": {
@@ -321,12 +348,14 @@
       "mercspeak:engie/engie_go1",
       "mercspeak:engie/engie_go2",
       "mercspeak:engie/engie_go3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.move": {
     "subtitle": "sound.mercspeak.engie.move",
-    "sounds": [ "mercspeak:engie/engie_move" ]
+    "sounds": [ "mercspeak:engie/engie_move" ],
+    "style": "rndwave"
   },
 
   "engie.left": {
@@ -334,7 +363,8 @@
     "sounds": [
       "mercspeak:engie/engie_left1",
       "mercspeak:engie/engie_left2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.right": {
@@ -343,7 +373,8 @@
       "mercspeak:engie/engie_right1",
       "mercspeak:engie/engie_right2",
       "mercspeak:engie/engie_right3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.yes": {
@@ -352,7 +383,8 @@
       "mercspeak:engie/engie_yes1",
       "mercspeak:engie/engie_yes2",
       "mercspeak:engie/engie_yes3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.no": {
@@ -361,7 +393,8 @@
       "mercspeak:engie/engie_no1",
       "mercspeak:engie/engie_no2",
       "mercspeak:engie/engie_no3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.incoming": {
@@ -370,7 +403,8 @@
       "mercspeak:engie/engie_incoming1",
       "mercspeak:engie/engie_incoming2",
       "mercspeak:engie/engie_incoming3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.spy": {
@@ -389,7 +423,8 @@
       "mercspeak:engie/engie_spy_sniper",
       "mercspeak:engie/engie_spy_spy1",
       "mercspeak:engie/engie_spy_spy2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.sentry_ahead": {
@@ -397,7 +432,8 @@
     "sounds": [
       "mercspeak:engie/engie_sentry_ahead1",
       "mercspeak:engie/engie_sentry_ahead2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.teleporter": {
@@ -405,17 +441,20 @@
     "sounds": [
       "mercspeak:engie/engie_teleporter1",
       "mercspeak:engie/engie_teleporter2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.dispenser": {
     "subtitle": "sound.mercspeak.engie.dispenser",
-    "sounds": [ "mercspeak:engie/engie_dispenser" ]
+    "sounds": [ "mercspeak:engie/engie_dispenser" ],
+    "style": "rndwave"
   },
 
   "engie.sentry_here": {
     "subtitle": "sound.mercspeak.engie.sentry_here",
-    "sounds": [ "mercspeak:engie/engie_sentry_here" ]
+    "sounds": [ "mercspeak:engie/engie_sentry_here" ],
+    "style": "rndwave"
   },
 
   "engie.ubercharge": {
@@ -424,12 +463,14 @@
       "mercspeak:engie/engie_ubercharge1",
       "mercspeak:engie/engie_ubercharge2",
       "mercspeak:engie/engie_ubercharge3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.schadenfreude": {
     "subtitle": "sounds.mercspeak.engie.schadenfreude",
-    "sounds": [ "mercspeak:engie/engie_schadenfreude"]
+    "sounds": [ "mercspeak:engie/engie_schadenfreude"],
+    "style": "rndwave"
   },
 
   "engie.help": {
@@ -438,7 +479,8 @@
       "mercspeak:engie/engie_help1",
       "mercspeak:engie/engie_help2",
       "mercspeak:engie/engie_help3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.cry": {
@@ -455,7 +497,8 @@
       "mercspeak:engie/engie_cry_aim3",
       "mercspeak:engie/engie_cry_aim4",
       "mercspeak:engie/engie_cry_aim5"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.cheer": {
@@ -468,7 +511,8 @@
       "mercspeak:engie/engie_cheer5",
       "mercspeak:engie/engie_cheer6",
       "mercspeak:engie/engie_cheer7"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.jeer": {
@@ -478,12 +522,14 @@
       "mercspeak:engie/engie_jeer2",
       "mercspeak:engie/engie_jeer3",
       "mercspeak:engie/engie_jeer4"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.positive": {
     "subtitle": "sounds.mercspeak.engie.positive",
-    "sounds": [ "mercspeak:engie/engie_positive" ]
+    "sounds": [ "mercspeak:engie/engie_positive" ],
+    "style": "rndwave"
   },
 
   "engie.negative": {
@@ -501,7 +547,8 @@
       "mercspeak:engie/engie_negative10",
       "mercspeak:engie/engie_negative11",
       "mercspeak:engie/engie_negative12"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.niceshot": {
@@ -510,7 +557,8 @@
       "mercspeak:engie/engie_niceshot1",
       "mercspeak:engie/engie_niceshot2",
       "mercspeak:engie/engie_niceshot3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "engie.goodjob": {
@@ -519,7 +567,8 @@
       "mercspeak:engie/engie_goodjob1",
       "mercspeak:engie/engie_goodjob2",
       "mercspeak:engie/engie_goodjob3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
 
@@ -531,7 +580,8 @@
       "mercspeak:spy/spy_medic1",
       "mercspeak:spy/spy_medic2",
       "mercspeak:spy/spy_medic3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.thanks": {
@@ -542,7 +592,8 @@
       "mercspeak:spy/spy_thanks3",
       "mercspeak:spy/spy_thanks_kill1",
       "mercspeak:spy/spy_thanks_kill2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.go": {
@@ -551,7 +602,8 @@
       "mercspeak:spy/spy_go1",
       "mercspeak:spy/spy_go2",
       "mercspeak:spy/spy_go3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.move": {
@@ -559,7 +611,8 @@
     "sounds": [
       "mercspeak:spy/spy_move1",
       "mercspeak:spy/spy_move2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.left": {
@@ -568,7 +621,8 @@
       "mercspeak:spy/spy_left1",
       "mercspeak:spy/spy_left2",
       "mercspeak:spy/spy_left3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.right": {
@@ -577,7 +631,8 @@
       "mercspeak:spy/spy_right1",
       "mercspeak:spy/spy_right2",
       "mercspeak:spy/spy_right3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.yes": {
@@ -586,7 +641,8 @@
       "mercspeak:spy/spy_yes1",
       "mercspeak:spy/spy_yes2",
       "mercspeak:spy/spy_yes3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.no": {
@@ -595,7 +651,8 @@
       "mercspeak:spy/spy_no1",
       "mercspeak:spy/spy_no2",
       "mercspeak:spy/spy_no3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.incoming": {
@@ -604,7 +661,8 @@
       "mercspeak:spy/spy_incoming1",
       "mercspeak:spy/spy_incoming2",
       "mercspeak:spy/spy_incoming3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.spy": {
@@ -623,7 +681,8 @@
       "mercspeak:spy/spy_spy_sniper",
       "mercspeak:spy/spy_spy_spy1",
       "mercspeak:spy/spy_spy_spy2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.sentry_ahead": {
@@ -631,22 +690,26 @@
     "sounds": [
       "mercspeak:spy/spy_sentry_ahead1",
       "mercspeak:spy/spy_sentry_ahead2"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.teleporter": {
     "subtitle": "sound.mercspeak.spy.teleporter",
-    "sounds": [ "mercspeak:spy/spy_teleporter" ]
+    "sounds": [ "mercspeak:spy/spy_teleporter" ],
+    "style": "rndwave"
   },
 
   "spy.dispenser": {
     "subtitle": "sound.mercspeak.spy.dispenser",
-    "sounds": [ "mercspeak:spy/spy_dispenser" ]
+    "sounds": [ "mercspeak:spy/spy_dispenser" ],
+    "style": "rndwave"
   },
 
   "spy.sentry_here": {
     "subtitle": "sound.mercspeak.spy.sentry_here",
-    "sounds": [ "mercspeak:spy/spy_sentry_here" ]
+    "sounds": [ "mercspeak:spy/spy_sentry_here" ],
+    "style": "rndwave"
   },
 
   "spy.ubercharge": {
@@ -655,12 +718,20 @@
       "mercspeak:spy/spy_ubercharge1",
       "mercspeak:spy/spy_ubercharge2",
       "mercspeak:spy/spy_ubercharge3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.schadenfreude": {
     "subtitle": "sounds.mercspeak.spy.schadenfreude",
-    "sounds": [ "mercspeak:spy/spy_schadenfreude"]
+    "sounds": [
+      {
+        "name": "mercspeak:spy/spy_schadenfreude",
+        "attenuation_distance": 100
+      }
+    ],
+    "style": "rndwave",
+    "attenuation_distance": 100
   },
 
   "spy.help": {
@@ -669,7 +740,8 @@
       "mercspeak:spy/spy_help1",
       "mercspeak:spy/spy_help2",
       "mercspeak:spy/spy_help3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.cry": {
@@ -684,7 +756,8 @@
       "mercspeak:spy/spy_cry_aim4",
       "mercspeak:spy/spy_cry_aim5",
       "mercspeak:spy/spy_cry_aim6"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.cheer": {
@@ -698,7 +771,8 @@
       "mercspeak:spy/spy_cheer6",
       "mercspeak:spy/spy_cheer7",
       "mercspeak:spy/spy_cheer8"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.jeer": {
@@ -710,7 +784,8 @@
       "mercspeak:spy/spy_jeer4",
       "mercspeak:spy/spy_jeer5",
       "mercspeak:spy/spy_jeer6"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.positive": {
@@ -727,7 +802,8 @@
       "mercspeak:spy/spy_positive9",
       "mercspeak:spy/spy_positive10",
       "mercspeak:spy/spy_positive11"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.negative": {
@@ -742,7 +818,8 @@
       "mercspeak:spy/spy_negative7",
       "mercspeak:spy/spy_negative8",
       "mercspeak:spy/spy_negative9"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.niceshot": {
@@ -751,7 +828,8 @@
       "mercspeak:spy/spy_niceshot1",
       "mercspeak:spy/spy_niceshot2",
       "mercspeak:spy/spy_niceshot3"
-    ]
+    ],
+    "style": "rndwave"
   },
 
   "spy.goodjob": {
@@ -760,6 +838,7 @@
       "mercspeak:spy/spy_goodjob1",
       "mercspeak:spy/spy_goodjob2",
       "mercspeak:spy/spy_goodjob3"
-    ]
+    ],
+    "style": "rndwave"
   }
 }
