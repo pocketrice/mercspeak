@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class Mercspeak implements ModInitializer {
 	public static final String MOD_ID = "mercspeak";
+	public static final String MOD_PACKAGE = "no.mincci.mercspeak";
 
 	public static final SimpleParticleType CHITCHAT_PARTICLE = FabricParticleTypes.simple();
 
