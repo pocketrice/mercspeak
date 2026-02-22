@@ -8,12 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.gameevent.GameEvent;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -26,12 +22,12 @@ public class VPanel {
             VMENU_U = 0, VMENU_V = 0,
             VMENU_R_WIDTH = 40 * 2, VMENU_R_HEIGHT = 64 * 2,
             VMENU_T_WIDTH = 40 * 2, VMENU_T_HEIGHT = 64 * 2;
-    private static final int COLOR_CHAT = 0x256D8D;
+    private static final int COLOR_TEXT = 0x256D8D;
 
-    private static final Identifier texVMenu = Mercspeak.resolveId("textures/vmenu.png");
+    private static final Identifier TEX_VMENU = Mercspeak.resolveId("textures/vmenu.png");
 
-    private static final MsTimer timerVMenuFade = new MsTimer(VMENU_ANIM_MS); // for both fade-in and fade-out; fade-out == !isFadeIn
-    private static final AgnosticTimer timerVMenuCooldown = new AgnosticTimer(VMENU_COOLDOWN_TICKS);
+    private static final MsTimer TIMER_VMENU_FADE = new MsTimer(VMENU_ANIM_MS); // for both fade-in and fade-out; fade-out == !isFadeIn
+    private static final AgnosticTimer TIMER_VMENU_COOLDOWN = new AgnosticTimer(VMENU_COOLDOWN_TICKS);
     private static @Nullable VCmd activeVMenu;
     private static boolean isFadeIn = true;
 
@@ -52,7 +48,7 @@ public class VPanel {
 
 
 
-            timerVMenuCooldown.step(); // note that AgnosticTimers do not step if not vc!
+            TIMER_VMENU_COOLDOWN.step(); // note that AgnosticTimers do not step if not vc!
 
             ModBinds.VC_LATCH.update_depress();
             ModBinds.VN_LATCH.update_depress();
@@ -61,7 +57,7 @@ public class VPanel {
             Optional<VNum> vnCand = ModBinds.VN_LATCH.poll_depress();
 
             vcCand.ifPresent(vc -> {
-                if (isFadeIn || !timerVMenuFade.isRunning()) { // close if same keyed, otherwise set to new key. Lock if animation is running (only fade out).
+                if (isFadeIn || !TIMER_VMENU_FADE.isRunning()) { // close if same keyed, otherwise set to new key. Lock if animation is running (only fade out).
 
                     // activeVMenu == vc (FADE OUT)
                     // activeVMenu == null (FADE IN)
@@ -85,7 +81,7 @@ public class VPanel {
                     boolean wasMenuClosed = (activeVMenu == null);
 
                     if (isMenuNegation || wasMenuClosed) { // initiate fade anim?
-                        timerVMenuFade.reset();
+                        TIMER_VMENU_FADE.reset();
                         isFadeIn = wasMenuClosed;
                     }
 
@@ -98,10 +94,10 @@ public class VPanel {
                 }
             });
 
-            if (activeVMenu != null && vnCand.isPresent() && !timerVMenuCooldown.isRunning() ) { // if not locked fading out and not on cooldown, proc vcmd.
+            if (activeVMenu != null && vnCand.isPresent() && !TIMER_VMENU_COOLDOWN.isRunning() ) { // if not locked fading out and not on cooldown, proc vcmd.
                 VNum vn = vnCand.get();
                 client.player.displayClientMessage(
-                        Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_CHAT)
+                        Component.translatable("text.mercspeak.chat_prefix", client.player.getDisplayName()).withColor(COLOR_TEXT)
                                 .append(Component.translatable("text.mercspeak.chat_sep")).withStyle(ChatFormatting.WHITE)
                                 .append(Component.translatable(activeVNums[vn.index()])), false);
 
@@ -112,8 +108,8 @@ public class VPanel {
 
                 //client.player.playSound(ModSounds.SOUNDPACK_MERC.get(Pair.of(currentMerc, VType.from(activeVMenu, vn))), 1f, 1f);
 
-                timerVMenuCooldown.reset();
-                timerVMenuFade.reset();
+                TIMER_VMENU_COOLDOWN.reset();
+                TIMER_VMENU_FADE.reset();
                 activeVMenu = null;
                 isFadeIn = false;
                 //activeVMenu = null; // if call is done, close the menu!
@@ -122,13 +118,13 @@ public class VPanel {
     }
 
     protected static void render(GuiGraphics context, DeltaTracker tickCounter) {
-        if (activeVMenu != null || timerVMenuFade.isRunning()) {
-            timerVMenuFade.start();
+        if (activeVMenu != null || TIMER_VMENU_FADE.isRunning()) {
+            TIMER_VMENU_FADE.start();
             double lerpFade = (isFadeIn)
-                    ? EasingFunction.EASE_OUT_EXPONENTIAL.apply(1f - timerVMenuFade.lerp())
-                    : EasingFunction.EASE_IN_CIRCULAR.apply(timerVMenuFade.lerp());
+                    ? EasingFunction.EASE_OUT_EXPONENTIAL.apply(1f - TIMER_VMENU_FADE.lerp())
+                    : EasingFunction.EASE_IN_CIRCULAR.apply(TIMER_VMENU_FADE.lerp());
             int opacityFade = ((int)(0xB0 * lerpFade) << 0x18) + 0x00EFEFEF;
-            context.blit(RenderPipelines.GUI_TEXTURED, texVMenu, VMENU_X, VMENU_Y, VMENU_U, VMENU_V, VMENU_R_WIDTH, VMENU_R_HEIGHT, VMENU_T_WIDTH, VMENU_T_HEIGHT, opacityFade);
+            context.blit(RenderPipelines.GUI_TEXTURED, TEX_VMENU, VMENU_X, VMENU_Y, VMENU_U, VMENU_V, VMENU_R_WIDTH, VMENU_R_HEIGHT, VMENU_T_WIDTH, VMENU_T_HEIGHT, opacityFade);
 
 
             Font fontMc = Minecraft.getInstance().font;

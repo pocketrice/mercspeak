@@ -31,7 +31,7 @@ public class BtnClassSel extends AbstractWidget {
     @Override
     public void onRelease(@NonNull MouseButtonEvent event) {
         if (true) { // TODO: check for left-click (binded)
-            VPanel.currentMerc = Mercenary.from(index);
+            VPanel.currentMerc = Mercenary.from(index).get(); // SAFETY: `index` always within bounds
             Minecraft.getInstance().setScreen(null);
         }
     }

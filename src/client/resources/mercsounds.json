@@ -79,8 +79,8 @@
         "jeer",
         "positive",
         "negative",
-        "nice_shot",
-        "good_job"
+        "niceshot",
+        "goodjob"
     ],
 
     "contextual": [

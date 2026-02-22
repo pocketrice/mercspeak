@@ -1,18 +1,18 @@
 {
-  "required": true,
-  "package": "no.mincci.mercspeak.mixin.client",
-  "compatibilityLevel": "JAVA_21",
-  "client": [
-    "SoundEngineMixin",
-    "SoundEventRegistrationMixin",
-    "SoundEventRegistrationSerializerMixin",
-    "SoundManagerMixin",
-    "SoundManagerPreparationsMixin",
-    "SoundTypeEntryBuilderMixin",
-    "WeighedSoundEventsMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "mixins": []
+    "required": true,
+    "package": "no.mincci.mercspeak.mixin.client",
+    "compatibilityLevel": "JAVA_21",
+    "client": [
+        "SoundEngineMixin",
+        "SoundEventRegistrationMixin",
+        "SoundEventRegistrationSerializerMixin",
+        "SoundManagerMixin",
+        "SoundManagerPreparationsMixin",
+        "SoundTypeEntryBuilderMixin",
+        "WeighedSoundEventsMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "mixins": []
 }

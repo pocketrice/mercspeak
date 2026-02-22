@@ -4,18 +4,40 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import java.util.Optional;
+
 public enum Mercenary {
-    SCOUT,
-    SOLDIER,
-    PYRO,
-    DEMOMAN,
-    HEAVY,
-    ENGINEER,
-    MEDIC,
-    SNIPER,
-    SPY,
+    SCOUT("scout"),
+    SOLDIER("soldier"),
+    PYRO("pyro"),
+    DEMOMAN("demo"),
+    HEAVY("heavy"),
+    ENGINEER("engie"),
+    MEDIC("medic"),
+    SNIPER("sniper"),
+    SPY("spy"),
     //MERCENARY,
-    CIVILIAN;
+    CIVILIAN("civvie");
+
+    Mercenary(String abbrev) {
+        this.abbrev = abbrev;
+    }
+
+    public static Optional<Mercenary> from(String abbrev) {
+        return Optional.ofNullable(switch (abbrev) {
+            case "scout" -> SCOUT;
+            case "soldier" -> SOLDIER;
+            case "pyro" -> PYRO;
+            case "demo" -> DEMOMAN;
+            case "heavy" -> HEAVY;
+            case "engie" -> ENGINEER;
+            case "medic" -> MEDIC;
+            case "sniper" -> SNIPER;
+            case "spy" -> SPY;
+            case "civvie" -> CIVILIAN;
+            default -> null;
+        });
+    }
 
     public static Mercenary from(VNum vn) {
         return switch (vn) {
@@ -32,8 +54,8 @@ public enum Mercenary {
         };
     }
 
-    public static Mercenary from(int i) {
-        return switch (i) {
+    public static Optional<Mercenary> from(int i) {
+        return Optional.ofNullable(switch (i) {
             case 0 -> SCOUT;
             case 1 -> SOLDIER;
             case 2 -> PYRO;
@@ -43,14 +65,17 @@ public enum Mercenary {
             case 6 -> MEDIC;
             case 7 -> SNIPER;
             case 8 -> SPY;
-            default -> CIVILIAN;
-        };
+            case 9 -> CIVILIAN;
+            default -> null;
+        });
     }
 
     @Override
     public String toString() {
-        return super.toString().toLowerCase();
+        return this.abbrev;
     }
+
+    private String abbrev;
 }
 
 class MercenaryArgumentType implements ArgumentType<Mercenary> {

@@ -18,16 +18,13 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MercspeakSoundsProvider extends FabricSoundsProvider {
-    private static final Pattern RE_MERC_SUFFIX = Pattern.compile("\\*");
-    private static final Path MS_SOUNDS_ROOT = Path.of(String.format("%smain/resources/assets/%s/sounds",
-            "../".repeat(Mercspeak.MOD_PACKAGE.split("\\.").length),
+    private static final String MS_MERC_WILDCARD = "*";
+    private static final Path MS_SOUNDS_ROOT = Path.of(String.format("../resources/main/assets/%s/sounds", // target in build directory
             Mercspeak.MOD_ID)
     );
-    private static final Path MS_SOUNDS_JSON = MS_SOUNDS_ROOT.getParent().resolve("mercsounds.json");
+    private static final Path MS_SOUNDS_JSON = Path.of("../resources/client/mercspeak.json");
     private static final String MS_SOUNDS_CONTEXTUAL_DIR = "%s/contextual/";
     private static final String MS_SOUNDS_VOICE_DIR = "%s/voice/";
     private static final int MS_ATTENUATION = 32;
@@ -39,8 +36,9 @@ public class MercspeakSoundsProvider extends FabricSoundsProvider {
     @Override
     protected void configure(HolderLookup.@NonNull Provider registryLookup, @NonNull SoundExporter exporter) {
         Gson gson = new Gson();
+
         try {
-            MercsoundsData data = gson.fromJson(new FileReader(MS_SOUNDS_JSON.toFile()), MercsoundsData.class);
+            MercsoundsData data = gson.fromJson(new FileReader(MS_SOUNDS_JSON.toFile().getCanonicalFile()), MercsoundsData.class);
 
             for (Mercenary merc : Mercenary.values()) {
                 Path soundsContextualDir = Path.of(String.format(MS_SOUNDS_CONTEXTUAL_DIR, merc));
@@ -68,18 +66,21 @@ public class MercspeakSoundsProvider extends FabricSoundsProvider {
 
                 // Merc-universal contextuals
                 for (String ctx : data.contextual) {
-                    if (RE_MERC_SUFFIX.matcher(ctx).hasMatch()) {
+                    String prefix = String.format("%s_%s", merc, ctx.replace('.', '_'));
+                    String id =  String.format("%s.contextual.%s", merc, ctx);
+
+                    if (ctx.contains(MS_MERC_WILDCARD)) {
                         addSoundMerc(exporter,
                                 soundsContextualDir,
-                                String.format("%s_%s_*", merc, ctx),
-                                String.format("%s.contextual.%s.*", merc, ctx)
+                                prefix,
+                                id
                         );
                     } else {
                         addSound(exporter,
                                 merc,
                                 soundsContextualDir,
-                                String.format("%s:%s/contextual/%s_%s", Mercspeak.MOD_ID, merc, merc, ctx),
-                                String.format("%s.contextual.%s", merc, ctx)
+                                prefix,
+                                id
                         );
                     }
                 }
@@ -96,40 +97,44 @@ public class MercspeakSoundsProvider extends FabricSoundsProvider {
 
     /// Exports all numbered files under the given prefix (ex. `mercspeak:demo/voice/demo_thanks1`);
     public static void addSound(SoundExporter exporter, Mercenary merc, Path soundsDir, String filePrefix, String id) {
-        Identifier soundId = resolveSoundId(merc, id);
+        Identifier soundId = Mercspeak.resolveId(id);
         SoundTypeBuilder soundType = SoundTypeBuilder.of()
-                .subtitle(String.format("merc_ctx.%s", soundId));
+                .subtitle(String.format("sound.%s.%s", Mercspeak.MOD_ID, id));
 
-        // search directory for all succeeding numerical suffixed files (wow)
-        int len = 1;
-        Path suffixedFile = MS_SOUNDS_ROOT.resolve(soundsDir).resolve(filePrefix + len);
+        // IF no num-suffix... shortcut to 1x file
+        // ELSE... search dir for consecutive successive num-suffixed files (wow)
 
-        while (Files.exists(suffixedFile, LinkOption.NOFOLLOW_LINKS)) {
-            SoundTypeBuilder.EntryBuilder sound = SoundTypeBuilder.EntryBuilder.ofFile(Identifier.parse(suffixedFile.toString()))
+        Path nonSuffixFile = MS_SOUNDS_ROOT.resolve(soundsDir).resolve(filePrefix + ".ogg");
+        boolean isNonSuffix = Files.isRegularFile(nonSuffixFile, LinkOption.NOFOLLOW_LINKS);
+
+        int index = 1;
+        Path suffixFile = nonSuffixFile.resolveSibling(filePrefix + index + ".ogg");
+
+
+        while (isNonSuffix || Files.isRegularFile(suffixFile, LinkOption.NOFOLLOW_LINKS)) { // NOTE: this assumes you have set up the audio file as valid! hence no granular checks.
+            Path fileLoc = soundsDir.resolve((isNonSuffix) ? filePrefix : filePrefix + index);
+            SoundTypeBuilder.EntryBuilder sound = SoundTypeBuilder.EntryBuilder.ofFile(Mercspeak.resolveId(fileLoc.toString()))
                     .attenuationDistance(MS_ATTENUATION);
             sound = ((SoundTypeEntryBuilderExt) sound).mercspeak$style(SoundEventStyle.RNDWAVE);
             soundType.sound(sound);
 
-            ++len;
-            suffixedFile = suffixedFile.getParent().resolve(filePrefix + len); // select next numbered item
+            ++index;
+            suffixFile = suffixFile.resolveSibling(filePrefix + index + ".ogg"); // select next numbered item
+
+            if (isNonSuffix) break;
         }
 
-        exporter.add(soundId, soundType);
+        if (index > 1) {
+            exporter.add(soundId, soundType);
+        }
     }
 
     /// Exports all merc-suffixed files under the given prefix (ex. `mercspeak:engie/voice/spy_*`).
     /// This will search for numbered files as well!
     public static void addSoundMerc(SoundExporter exporter, Path soundsDir, String filePrefix, String idPrefix) {
-        Matcher matcher_file = RE_MERC_SUFFIX.matcher(filePrefix);
-        Matcher matcher_id = RE_MERC_SUFFIX.matcher(idPrefix);
-
         for (Mercenary merc : Mercenary.values()) {
-            addSound(exporter, merc, soundsDir, matcher_file.replaceFirst(merc.toString()), matcher_id.replaceFirst(merc.toString()));
+            addSound(exporter, merc, soundsDir, filePrefix.replace(MS_MERC_WILDCARD, merc.toString()), idPrefix.replace(MS_MERC_WILDCARD, merc.toString()));
         }
-    }
-
-    public static Identifier resolveSoundId(Mercenary merc, String sound) {
-        return Mercspeak.resolveId(String.format("%s.%s", merc, sound));
     }
 
     private static class MercsoundsData {
